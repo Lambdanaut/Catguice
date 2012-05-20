@@ -1,0 +1,17 @@
+/* the humans responsible & colophon */
+/* humanstxt.org */
+
+
+/* TEAM */
+  Developer: Josh Thomas
+  Site: http://github.com/lambdanaut
+  Location: Wilmington, NC
+
+  Artist: Catherine Kern
+  Site: http://drawrawr.com/!catherine!
+  Location: Wilmington, NC
+
+/* SITE */
+  Standards: HTML5, CSS3
+  Components: Modernizr, jQuery
+  Software: Vim, Python, Flask

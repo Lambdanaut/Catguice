@@ -1,0 +1,6 @@
+*.pyc
+*.swo
+*.swi
+*.swp
+venv
+system/secrets.py
