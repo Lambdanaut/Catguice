@@ -1,0 +1,22 @@
+/* The main Catguice specific CSS */
+
+body {
+	font-family: 'Short Stack', cursive;
+}
+
+header {
+	position: relative;
+	height: 25px;
+	top: 0; right: 0; left: 0;
+	padding: 5px 50px 5px 50px;
+	background-color: lightblue;
+	z-index: 100;
+}
+
+#logo {
+	box-shadow: 1px 1px 1px black;
+}
+
+#content {
+	margin-top: 10px;
+}
