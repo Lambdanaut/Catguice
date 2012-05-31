@@ -11,3 +11,7 @@ def main():
 @app.route("/")
 def hello():
     return render_template("index.html")
+
+@app.errorhandler(404)
+def unauthorized(e):
+  return render_template('404.html'), 404

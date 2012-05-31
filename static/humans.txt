@@ -8,7 +8,7 @@
   Location: Wilmington, NC
 
   Artist: Catherine Kern
-  Site: http://drawrawr.com/!catherine!
+  Site: http://drawrawr.com/catherine
   Location: Wilmington, NC
 
 /* SITE */
