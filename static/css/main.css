@@ -2,6 +2,7 @@
 
 body {
 	font-family: 'Short Stack', cursive;
+	background-color: #FFCCFF;
 }
 
 header {
@@ -14,9 +15,19 @@ header {
 }
 
 #logo {
-	box-shadow: 1px 1px 1px black;
+
 }
 
 #content {
-	margin-top: 10px;
+	padding: 15px 20px 40px 20px;
+	background-color: #CCCCFF;
+	border-left: solid #FF3399 1px;
+	border-right: solid #FF3399 1px;
+	border-bottom: solid #FF3399 1px;
+
+
+}
+
+footer {
+	background-color: #FFCCFF;
 }
