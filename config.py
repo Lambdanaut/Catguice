@@ -4,7 +4,7 @@
 """
 
 # The Host of CatGuice server. 
-HOST = "localhost"
+HOST = "0.0.0.0"
 # The Port the server will run off of
 PORT = 80
 
