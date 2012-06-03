@@ -3,4 +3,3 @@
 *.swi
 *.swp
 venv
-system/secrets.py
