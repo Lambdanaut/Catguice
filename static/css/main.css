@@ -3,6 +3,11 @@
 body {
 	font-family: 'Short Stack', cursive;
 	background-color: #FFCCFF;
+	color: #302011
+}
+
+h2 {
+	border-bottom: dashed 3px #CC0066;
 }
 
 a {
@@ -42,6 +47,9 @@ nav li:last-child { margin-right: 0em; }
 	border-bottom: solid #FF3399 1px;
 }
 
+/*
+ * The Product Preview Image Widget
+*/
 .product_preview {
 	float: left;
 	margin: 9px;
@@ -50,21 +58,37 @@ nav li:last-child { margin-right: 0em; }
 	border: solid 1px #FF3399;
 	overflow: hidden;
 	cursor: pointer;
-	transition: 0.5s;
-	-moz-transition: 0.5s; /* Firefox 4 */
-	-webkit-transition: 0.5s; /* Safari and Chrome */
-	-o-transition: 0.5s; /* Opera */
+	transition: 0.5s all ease-in-out;
+	-moz-transition: 0.5s all ease-in-out; /* Firefox 4 */
+	-webkit-transition: 0.5s all ease-in-out; /* Safari and Chrome */
+	-o-transition: 0.5s all ease-in-out; /* Opera */
 }
+.product_preview a:hover{ text-decoration: none; } 
 .product_preview:hover {
 	box-shadow: 0 0 7px #FF3399;
 }
+.product_preview .product_name {
+	position: relative;
+	text-align: center;
+	padding: 5px 20px 5px 20px;
+	background-color: #FFCCFF;
+	top: 0px;
+	transition: 0.5s all;
+	-moz-transition: 0.5s all; /* Firefox 4 */
+	-webkit-transition: 0.5s all; /* Safari and Chrome */
+	-o-transition: 0.5s all; /* Opera */
+}
+.product_preview:hover .product_name {
+	top: -150px;
+}
 .product_preview img {
 	position: relative;
+	left: 0;
 	width: 300px;
-	transition: 1s;
-	-moz-transition: 1s; /* Firefox 4 */
-	-webkit-transition: 1s; /* Safari and Chrome */
-	-o-transition: 1s; /* Opera */
+	transition: 1s all ease-in-out;
+	-moz-transition: 1s all ease-in-out; /* Firefox 4 */
+	-webkit-transition: 1s all ease-in-out; /* Safari and Chrome */
+	-o-transition: 1s all ease-in-out; /* Opera */
 }
 .product_preview:hover img{
 	width: 400px;
