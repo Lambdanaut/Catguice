@@ -10,8 +10,14 @@ header {
 	height: 25px;
 	top: 0; right: 0; left: 0;
 	padding: 5px 50px 5px 50px;
-	background-color: lightblue;
+	background-color: #EEEEEE;
+	border-bottom: solid 1px black;
 	z-index: 100;
+}
+
+nav {
+	background-color: #CCCCCC;
+	border-bottom: solid 1px black;
 }
 
 #logo {
@@ -20,12 +26,10 @@ header {
 
 #content {
 	padding: 15px 20px 40px 20px;
-	background-color: #CCCCFF;
+	background-color: #EEEEEE;
 	border-left: solid #FF3399 1px;
 	border-right: solid #FF3399 1px;
 	border-bottom: solid #FF3399 1px;
-
-
 }
 
 footer {

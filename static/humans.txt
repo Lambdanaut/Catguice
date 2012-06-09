@@ -3,12 +3,12 @@
 
 
 /* TEAM */
-  Developer: Josh Thomas
-  Site: http://github.com/lambdanaut
+  Owner, Currator, and Developer: Catherine Kern
+  Site: http://drawrawr.com/!catherine!
   Location: Wilmington, NC
 
-  Artist: Catherine Kern
-  Site: http://drawrawr.com/catherine
+  Developer: Josh Thomas
+  Site: http://github.com/lambdanaut
   Location: Wilmington, NC
 
 /* SITE */
