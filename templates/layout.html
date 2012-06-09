@@ -29,7 +29,7 @@
 <header>
 	<div class="container_12">
 		<div id="logo" class="grid_2">
-			Catguice logo 
+			<a href="{{ url_for("index") }}">Catguice logo</a>
 		</div>
 		<div class="grid_10">
 			<div style="float: right; margin:0;">
@@ -41,14 +41,17 @@
 </header>
 <nav>
 	<div class="container_12">
-		<a href="/">Home</a>
+		<ul>
+			<li><a href="/">Home</a></li>
+			<li><a href="/">Checkout</a></li>
+		</ul>
 	</div>
 </nav>
 <div role="main" id="content" class="container_12">
 {% block content %}{% endblock %}
 </div>
 <footer class="container_12">
-	Catguice &copy; Catherine Kern
+	<a href="{{ url_for("about") }}">Catguice</a> &copy; Catherine Kern
 </footer>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>

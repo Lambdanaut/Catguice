@@ -5,6 +5,13 @@ body {
 	background-color: #FFCCFF;
 }
 
+a {
+	color: #CC0066;
+	text-decoration: none; 
+}
+a:hover   { color: #CC0066; text-decoration: underline; }
+a:visited { color: #CC0066; } 
+
 header {
 	position: relative;
 	height: 25px;
@@ -12,14 +19,17 @@ header {
 	padding: 5px 50px 5px 50px;
 	background-color: #EEEEEE;
 	border-bottom: solid 1px black;
-	z-index: 100;
 }
 
 nav {
 	background-color: #CCCCCC;
 	border-bottom: solid 1px black;
 }
-
+nav li {
+	display: inline;
+	margin-right: 1em;
+}
+nav li:last-child { margin-right: 0em; }
 #logo {
 
 }
@@ -30,6 +40,35 @@ nav {
 	border-left: solid #FF3399 1px;
 	border-right: solid #FF3399 1px;
 	border-bottom: solid #FF3399 1px;
+}
+
+.product_preview {
+	float: left;
+	margin: 9px;
+	width: 300px;
+	height: 300px;
+	border: solid 1px #FF3399;
+	overflow: hidden;
+	cursor: pointer;
+	transition: 0.5s;
+	-moz-transition: 0.5s; /* Firefox 4 */
+	-webkit-transition: 0.5s; /* Safari and Chrome */
+	-o-transition: 0.5s; /* Opera */
+}
+.product_preview:hover {
+	box-shadow: 0 0 7px #FF3399;
+}
+.product_preview img {
+	position: relative;
+	width: 300px;
+	transition: 1s;
+	-moz-transition: 1s; /* Firefox 4 */
+	-webkit-transition: 1s; /* Safari and Chrome */
+	-o-transition: 1s; /* Opera */
+}
+.product_preview:hover img{
+	width: 400px;
+	left: -50px;
 }
 
 footer {
