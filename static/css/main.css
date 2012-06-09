@@ -14,8 +14,8 @@ a {
 	color: #B378DC;
 	text-decoration: none; 
 }
-a:hover   { color: #FFFFFF; text-decoration: underline; }
-a:visited { color: #FFFFFF; } 
+a:hover   { color: #B378DC; text-decoration: underline; }
+a:visited { color: #B378DC; } 
 
 header {
 	position: relative;
@@ -35,6 +35,13 @@ nav li {
 	margin-right: 1em;
 }
 nav li:last-child { margin-right: 0em; }
+nav a {
+	color: #FFFFFF;
+	text-decoration: none; 
+}
+nav a:hover   { color: #FFFFFF; text-decoration: underline; }
+nav a:visited { color: #FFFFFF; } 
+
 #logo {
 
 }
@@ -72,6 +79,7 @@ nav li:last-child { margin-right: 0em; }
 	padding: 5px 20px 5px 20px;
 	background-color: #B378DC;
 	top: 0px;
+	color: #FFFFFF;
 	transition: 0.5s all;
 	-moz-transition: 0.5s all; /* Firefox 4 */
 	-webkit-transition: 0.5s all; /* Safari and Chrome */
@@ -95,5 +103,11 @@ nav li:last-child { margin-right: 0em; }
 }
 
 footer {
-	background-color: #FFFFFF
+	background-color: #FFFFFF;
+	border-left: solid #A935FB 1px;
+	border-right: solid #A935FB 1px;
+	border-bottom: solid #A935FB 1px;
+	margin-bottom: 10px;
+	padding-left: 1em;
+	padding-right: 1em;
 }
