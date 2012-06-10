@@ -6,7 +6,8 @@ body {
 	color: #4CCC4C
 }
 
-h2 {
+h1 {
+	font-size: 1.5em;
 	border-bottom: dashed 3px #B378DC;
 }
 
@@ -52,6 +53,13 @@ nav a:visited { color: #FFFFFF; }
 	border-left: solid #A935FB 1px;
 	border-right: solid #A935FB 1px;
 	border-bottom: solid #A935FB 1px;
+}
+
+.container {
+	color: #FFFFFF;
+	padding: 10px 20px;
+	background-color: #B378DC;
+	border: solid 1px black;
 }
 
 /*
