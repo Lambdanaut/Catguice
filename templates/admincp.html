@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block title %}Admin Control Panel{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+	{% if not admin %}
+		<form method="POST">
+			<label for="admin_password">Admin Password: </label>
+			<input type="password" name="admin_password" id="admin_password">
+			<input type="submit" value="Login">
+		</form>
+	{% else %}
+		<h1> The Admin Control Panel </h1>
+		<div class="grid_4">
+			<h2>Add a Product</h2>
+			<div class="container">
+				<form method="POST" action="{{ url_for("add_product") }}">
+					<label for="product_title" style="display:block">Title: </label><input type="text" name="product_title" id="product_title">
+					<label for="product_description" style="display:block">Description: </label><textarea name="product_description" id="product_description" class="stretch" cols="34" rows="10" style="margin-bottom: 10px;"></textarea>
+					<label for="product_images" style="display:block">Image Links: </label><textarea placeholder="One Image Link Per Line" name="product_images" id="product_images" class="stretch" cols="34" rows="5"></textarea>
+					<label for="product_primary_colors" style="display:block">Primary Colors: </label><textarea placeholder="One Color Per Line" name="product_primary_colors" id="product_primary_colors" class="stretch" cols="34" rows="5"></textarea>
+					<label for="product_secondary_color_name" style="display:block">Secondary Color Name: </label><input type="text" name="product_secondary_color_name" id="product_secondary_color_name">
+					<label for="product_secondary_colors" style="display:block">Secondary Colors: </label><textarea placeholder="One Color Per Line" name="product_secondary_colors" id="product_secondary_colors" class="stretch" cols="34" rows="5"></textarea>
+					<input type="submit" value="Add Product">
+				</form>
+			</div>
+		</div>
+		<div class="grid_4">
+			<h2>Set Default Prices<h2>
+			<div class="container">
+
+			</div>
+		</div>
+		<div class="grid_4">
+			<h2>Stats</h2>
+			<div class="container">
+			</div>
+		</div>
+		<div class="clear"></div>
+	{% endif %}
+{% endblock %}

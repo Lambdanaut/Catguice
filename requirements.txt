@@ -2,3 +2,4 @@ Flask>=0.8
 distribute==0.6.24
 wsgiref>=0.1
 pymongo>=2.2
+wtforms>=1.0

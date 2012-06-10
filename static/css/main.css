@@ -10,6 +10,9 @@ h1 {
 	font-size: 1.5em;
 	border-bottom: dashed 3px #B378DC;
 }
+h2 {
+	font-size: 1.4em;
+}
 
 a {
 	color: #B378DC;
@@ -17,6 +20,9 @@ a {
 }
 a:hover   { color: #B378DC; text-decoration: underline; }
 a:visited { color: #B378DC; } 
+
+textarea {margin-bottom: 10px;}
+input {margin-bottom: 10px; border: solid 1px black}
 
 header {
 	position: relative;
@@ -60,6 +66,15 @@ nav a:visited { color: #FFFFFF; }
 	padding: 10px 20px;
 	background-color: #B378DC;
 	border: solid 1px black;
+}
+
+.stretch {
+	width: 100%;
+}
+.stretch:focus { width: 500px;}
+
+.product {
+	width: 100%;
 }
 
 /*
