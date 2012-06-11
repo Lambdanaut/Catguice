@@ -4,7 +4,7 @@
 {% endblock %}
 {% block content %}
 	{% if not admin %}
-		<form method="POST">
+		<form method="POST" action="{{ url_for("admincp") }}">
 			<label for="admin_password">Admin Password: </label>
 			<input type="password" name="admin_password" id="admin_password">
 			<input type="submit" value="Login">
