@@ -14,21 +14,36 @@
 		<div class="grid_4">
 			<h2>Add a Product</h2>
 			<div class="container">
-				<form method="POST" action="{{ url_for("add_product") }}">
-					<label for="product_title" style="display:block">Title: </label><input type="text" name="product_title" id="product_title">
-					<label for="product_description" style="display:block">Description: </label><textarea name="product_description" id="product_description" class="stretch" cols="34" rows="10" style="margin-bottom: 10px;"></textarea>
-					<label for="product_images" style="display:block">Image Links: </label><textarea placeholder="One Image Link Per Line" name="product_images" id="product_images" class="stretch" cols="34" rows="5"></textarea>
-					<label for="product_primary_colors" style="display:block">Primary Colors: </label><textarea placeholder="One Color Per Line" name="product_primary_colors" id="product_primary_colors" class="stretch" cols="34" rows="5"></textarea>
-					<label for="product_secondary_color_name" style="display:block">Secondary Color Name: </label><input type="text" name="product_secondary_color_name" id="product_secondary_color_name">
-					<label for="product_secondary_colors" style="display:block">Secondary Colors: </label><textarea placeholder="One Color Per Line" name="product_secondary_colors" id="product_secondary_colors" class="stretch" cols="34" rows="5"></textarea>
-					<input type="submit" value="Add Product">
-				</form>
+				{% if categories.count() %}
+					<form method="POST" action="{{ url_for("add_product") }}">
+						<label for="product_name" style="display:block">Name: </label><input type="text" name="product_name" id="product_name">
+						<label for="product_description" style="display:block">Description: </label><textarea name="product_description" id="product_description" class="stretch" cols="34" rows="10" style="margin-bottom: 10px;"></textarea>
+						<label for="product_images" style="display:block">Image Links: </label><textarea placeholder="One Image Link Per Line" name="product_images" id="product_images" class="stretch" cols="34" rows="5"></textarea>
+						<label for="product_primary_colors" style="display:block">Primary Colors: </label><textarea placeholder="One Color Per Line" name="product_primary_colors" id="product_primary_colors" class="stretch" cols="34" rows="5"></textarea>
+						<label for="product_secondary_color_name" style="display:block">Secondary Color Name: </label><input type="text" name="product_secondary_color_name" id="product_secondary_color_name">
+						<label for="product_secondary_colors" style="display:block">Secondary Colors: </label><textarea placeholder="One Color Per Line" name="product_secondary_colors" id="product_secondary_colors" class="stretch" cols="34" rows="5"></textarea>
+						<label for="product_category" style="display:block">Category: </label>
+						<select name="product_category" id="product_category">
+							{% for category in categories %}
+							<option value="{{ category["name"] }}">{{ category["name"] }}</option>
+							{% endfor %}
+						</select>
+						<input type="submit" value="Add Product" style="display: block; margin-top: 20px;">
+					</form>
+				{% else %}
+					You must add a <em>category</em> before you may add a product. 
+				{% endif %}	
 			</div>
 		</div>
 		<div class="grid_4">
-			<h2>Set Default Prices<h2>
+			<h2>Add Category</h2>
 			<div class="container">
-
+				<form method="POST" action="{{ url_for("add_category") }}">
+					<label for="category_name" style="display:block">Name: </label><input type="text" placeholder="Ex: Shirts; Jewelry; Hats" name="category_name" id="category_name">
+					<label for="category_description" style="display:block">Description (Optional): </label><textarea name="category_description" id="category_description" class="stretch" cols="34" rows="10" style="margin-bottom: 10px;"></textarea>
+					<label for="category_image" style="display:block">Preview Image: </label><input type="text" name="category_image" id="category_image">
+					<input type="submit" value="Add Category" style="display: block; margin-top: 20px;">
+				</form>
 			</div>
 		</div>
 		<div class="grid_4">

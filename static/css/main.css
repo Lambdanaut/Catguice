@@ -71,10 +71,18 @@ nav a:visited { color: #FFFFFF; }
 .stretch {
 	width: 100%;
 }
-.stretch:focus { width: 500px;}
+.stretch:focus {
+	width: 500px;
+	position: relative;
+	z-index: 1000;
+}
 
-.product {
+.product_image {
 	width: 100%;
+}
+
+.more_product_image {
+	width: 100px;
 }
 
 /*
@@ -87,6 +95,7 @@ nav a:visited { color: #FFFFFF; }
 	border: solid 1px #A935FB;
 	overflow: hidden;
 	cursor: pointer;
+	margin-bottom: 10px;
 	transition: 0.5s all ease-in-out;
 	-moz-transition: 0.5s all ease-in-out; /* Firefox 4 */
 	-webkit-transition: 0.5s all ease-in-out; /* Safari and Chrome */

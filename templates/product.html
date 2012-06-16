@@ -1,16 +1,23 @@
 {% extends "layout.html" %}
-{% block title %}Product Name{% endblock %}
+{% block title %}{{ product['name'] }}{% endblock %}
 {% block head %}
 {% endblock %}
 {% block content %}
 	<div class="grid_6">
-		<img src="/static/img/previewtest.jpg" class="product">
-		<div class="container" style="text-align:center;margin-top: 10px;">
-			More Photos
-		</div>
+		<img src="/static/img/previewtest.jpg" class="product_image">
+		{% if product['images'] %}
+			<div class="container" style="text-align:center;margin-top: 10px;">
+				<h4 style="margin-top: 0">More Photos</h4>
+				{% for image in product['images'] %}
+					<img src="{{ image }}" class="more_product_image">
+				{% endfor %}
+			</div>
+		{% endif %}
+		{% if related in product %}
 		<div class="container" style="margin-top: 10px;">
 			This product goes great with&hellip;
 		</div>
+		{% endif %}
 	</div>
 	<div class="grid_6">
 		<h1>Awesome Shirt #12</h1>

@@ -48,14 +48,22 @@ def inject_template():
 
 @app.route("/")
 def index():
-  hot_products = products_model.get(series = {"hot" : True})
-  return render_template("index.html")
+  featured_products = products_model.get(series = {"featured" : True})
+  categories = categories_model.get()
+  return render_template("index.html", categories=categories)
 
 @app.route("/product/<product_slug>")
 def product(product_slug):
   product = products_model.get_one({"slug" : product_slug.lower()})
   if not product: abort(404)
   return render_template("product.html", product=product)
+
+@app.route("/categories/<category_slug>")
+def category(category_slug):
+  category = categories_model.get_one({"slug" : category_slug.lower()})
+  if not category: abort(404)
+  products = products_model.get({"category" : category['name'] })
+  return render_template("category.html", category=category, products=products)
 
 @app.route("/about")
 def about():
@@ -72,15 +80,53 @@ def admincp():
       return render_template("admincp.html", admin=True)
     return render_template("admincp.html", admin=False)
   elif request.method == 'GET':
-    return render_template("admincp.html")
-
-@app.route("/categories/<cat>")
-def category(cat):
-  pass
-
-@app.route("/admincp/add_product")
+    categories = categories_model.get()
+    return render_template("admincp.html", categories=categories)
+ 
+@app.route("/admincp/add_product", methods=['POST'])
 def add_product():
-  pass
+  if g.admin:
+    if request.method == 'POST':
+      # Make sure all the required fields were found. 
+      product_fields = ['product_name', 'product_description', 'product_images', 'product_primary_colors', 'product_secondary_color_name', 'product_secondary_colors', 'product_category']
+      if not all(map(lambda p: p in request.form, product_fields) ):
+        return "There was an error processing your request. Not all of the required fields were found to be submitted. "
+      if not request.form['product_name']: return "The product name is required"
+      if not request.form['product_category']: return "The category is required"
+      if request.form['product_description']: description = request.form['product_description']
+      else:                                   description = None
+      product_data = {
+        'name'                 : request.form['product_name']
+      , 'description'          : description
+      , 'images'               : request.form['product_images'].split('\r\n')
+      , 'primary_colors'       : request.form['product_primary_colors'].split('\r\n')
+      , 'secondary_color_name' : request.form['product_secondary_color_name']
+      , 'secondary_colors'     : request.form['product_secondary_colors'].split('\r\n')
+      , 'category'             : request.form['product_category']
+      }
+      products_model.insert(product_data)
+      flash("Product Added Successfully")
+      return redirect(url_for('admincp'))
+
+@app.route("/admincp/add_category", methods=['POST'])
+def add_category():
+  if g.admin:
+    if request.method == 'POST':
+      # Make sure all the required fields were found. 
+      product_fields = ['category_name', 'category_description', 'category_image']
+      if not all(map(lambda p: p in request.form, product_fields) ):
+        return "There was an error processing your request. Not all of the required fields were found to be submitted. "
+      if not request.form['category_name']: return "The category name is required"
+      if request.form['category_description']: description = request.form['category_description']
+      else:                                    description = None
+      cat_data = {
+        'name'       : request.form['category_name']
+      , 'description' : description
+      , 'image'       : request.form['category_image']
+      }
+      categories_model.insert(cat_data)
+      flash("Category Added Successfully")
+      return redirect(url_for('admincp'))
 
 @app.errorhandler(404)
 def unauthorized(e):

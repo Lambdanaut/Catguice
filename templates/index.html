@@ -1,58 +1,23 @@
 {% extends "layout.html" %}
-{% block title %}CatGuice Home Page{% endblock %}
 {% block head %}
 {% endblock %}
 
 {% block content %}
-	<h1>Excellent Products</h1>
-	<div class="grid_4" style="margin-bottom: 50px;">
-		<div class="product_preview">
-			<a href="">
-				<img src="/static/img/previewtest.jpg">
-				<div class="product_name">A Product's Name</div>
-			</a>
-		</div>
-	</div>
-	<div class="grid_4">
-		<div class="product_preview">
-			<a href="">
-				<img src="/static/img/previewtest.jpg">
-				<div class="product_name">A Product's Name</div>
-			</a>
-		</div>
-	</div>
-	<div class="grid_4">
-		<div class="product_preview">
-			<a href="">
-				<img src="/static/img/previewtest.jpg">
-				<div class="product_name">A Product's Name</div>
-			</a>
-		</div>
-	</div>
-	<div class="clear"></div>
-	<div class="grid_4">
-		<div class="product_preview">
-			<a href="">
-				<img src="/static/img/previewtest.jpg">
-				<div class="product_name">A Product's Name</div>
-			</a>
-		</div>
-	</div>
-	<div class="grid_4">
-		<div class="product_preview">
-			<a href="">
-				<img src="/static/img/previewtest.jpg">
-				<div class="product_name">A Product's Name</div>
-			</a>
-		</div>
-	</div>
-	<div class="grid_4">
-		<div class="product_preview">
-			<a href="">
-				<img src="/static/img/previewtest.jpg">
-				<div class="product_name">A Product's Name</div>
-			</a>
-		</div>
-	</div>
+	{% if categories.count() %}
+		<h1>Products</h1>
+		{% set row_count=1 %}
+		{% for category in categories %}
+			<div class="grid_4">
+				<div class="product_preview">
+					<a href="{{ url_for("category", category_slug = category['slug']) }}">
+						<img src="{{ category['image'] }}">
+						<div class="product_name">{{ category['name'] }}</div>
+					</a>
+				</div>
+			</div>
+			{% if row_count % 3 == 0 %}<div class="clear"></div>{% endif %}
+			{% set row_count = row_count + 1 %}
+		{% endfor %}
+	{% endif %}
 	<div class="clear"></div>
 {% endblock %}

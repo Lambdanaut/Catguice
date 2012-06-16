@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block title %}{{ category['name'] }}{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+	<h1>{{ category['name'] }}</h1>
+	{% if category['description'] %}
+		<p>{{ category['description'] }}</p>
+	{% endif %}
+	{% set row_count=1 %}
+	{% for product in products %}
+		<div class="grid_4">
+			<div class="product_preview">
+				<a href="{{ url_for("product", product_slug = product['slug']) }}">
+					<img src="{{ product['images'][0] }}">
+					<div class="product_name">{{ product['name'] }}</div>
+				</a>
+			</div>
+		</div>
+		{% if row_count % 3 == 0 %}<div class="clear"></div>{% endif %}
+		{% set row_count = row_count + 1 %}
+	{% endfor %}
+	<div class="clear"></div>
+{% endblock %}

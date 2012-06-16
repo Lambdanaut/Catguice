@@ -13,10 +13,12 @@ class Categories:
     return self.categories.find_one(series)
 
   def insert (self, data):
-    self.products.insert(data)
+    if "name" in data and not "slug" in data:
+      data["slug"] = util.slugify(data["name"])
+    self.categories.insert(data)
 
   def update (self, series, data):
-    self.products.update(series, data)
+    self.categories.update(series, data)
 
 class Products:
   def __init__ (self, db):
@@ -36,3 +38,20 @@ class Products:
 
   def update (self, series, data):
     self.products.update(series, data)
+
+class Stats:
+  def __init__ (self, db):
+    self.db = db.db
+    self.stats = db.catguice_stats
+
+  def get (self, series = {}):
+    return self.stats.find(series)
+
+  def get_one (self, series = {}):
+    return self.stats.find_one(series)
+
+  def insert (self, data):
+    self.stats.insert(data)
+
+  def update (self, series, data):
+    self.stats.update(series, data)
