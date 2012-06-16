@@ -28,7 +28,7 @@ db     = db_con.heroku_app2925802
 db.authenticate(config.dbUsername, config.dbPassword)
 
 products_model = models.Products(db)
-products_model.insert({"name":"A product that is the best! "})
+categories_model = models.Categories(db)
 
 def main():
   app.run(host=config.HOST,port=config.PORT,debug=config.DEVELOPMENT)
@@ -73,6 +73,10 @@ def admincp():
     return render_template("admincp.html", admin=False)
   elif request.method == 'GET':
     return render_template("admincp.html")
+
+@app.route("/categories/<cat>")
+def category(cat):
+  pass
 
 @app.route("/admincp/add_product")
 def add_product():
