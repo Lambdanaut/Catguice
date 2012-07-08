@@ -26,7 +26,6 @@ input {margin-bottom: 10px; border: solid 1px black}
 
 header {
 	position: relative;
-	height: 25px;
 	top: 0; right: 0; left: 0;
 	padding: 5px 50px 5px 50px;
 	background-color: #FFFFFF;
@@ -49,8 +48,14 @@ nav a {
 nav a:hover   { color: #FFFFFF; text-decoration: underline; }
 nav a:visited { color: #FFFFFF; } 
 
-#logo {
+#logo_text {
+	font-size: 3em;
+	vertical-align: middle;
+}
 
+#logo_image {
+	height: 60px;
+	margin-right: 12px;
 }
 
 #content {

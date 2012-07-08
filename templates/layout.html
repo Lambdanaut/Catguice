@@ -16,6 +16,8 @@
 
 	<link href='http://fonts.googleapis.com/css?family=Short+Stack' rel='stylesheet' type='text/css'>
 
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
 	<link rel="stylesheet" href="/static/css/style.css">
 	<link rel="stylesheet" href="/static/css/grid.css">
 	<link rel="stylesheet" href="/static/css/main.css">
@@ -28,12 +30,12 @@
 <body>
 <header>
 	<div class="container_12">
-		<div id="logo" class="grid_2">
-			<a href="{{ url_for("index") }}">Catguice logo</a>
+		<div class="grid_6">
+			<a href="{{ url_for("index") }}"><img src="/static/img/catguice_logo.png" id="logo_image"><span id="logo_text">Catguice</span></a>
 		</div>
-		<div class="grid_10">
+		<div class="grid_6">
 			<div style="float: right; margin-right:10px;">
-				Logged in as <strong><u>Lambdanaut</u></strong>
+
 			</div>
 		</div>
 		<div class="clear"></div>
