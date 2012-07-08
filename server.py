@@ -98,10 +98,10 @@ def add_product():
       product_data = {
         'name'                 : request.form['product_name']
       , 'description'          : description
-      , 'images'               : request.form['product_images'].split('\r\n')
-      , 'primary_colors'       : request.form['product_primary_colors'].split('\r\n')
+      , 'images'               : util.split_product_list(request.form['product_images'])
+      , 'primary_colors'       : util.split_product_list(request.form['product_primary_colors'])
       , 'secondary_color_name' : request.form['product_secondary_color_name']
-      , 'secondary_colors'     : request.form['product_secondary_colors'].split('\r\n')
+      , 'secondary_colors'     : util.split_product_list(request.form['product_secondary_colors'])
       , 'category'             : request.form['product_category']
       }
       products_model.insert(product_data)

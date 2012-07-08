@@ -24,6 +24,9 @@ HOST = "0.0.0.0"
 # The Port the server will run off of
 PORT = int(os.environ.get('PORT', 5000))
 
+# The email address to use for all product sales and customer interaction 
+MY_EMAIL = "catguiceshop@gmail.com"
+
 # If this is set to True, then the server will set a few configuration options that make development easier.  
 # Set this to False when you're running the website in production mode. 
 DEVELOPMENT = True

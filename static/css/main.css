@@ -83,11 +83,12 @@ nav a:visited { color: #FFFFFF; }
 
 .more_product_image {
 	width: 100px;
+	cursor: pointer;
 }
 
 /*
  * The Product Preview Image Widget
-*/
+ */
 .product_preview {
 	float: left;
 	width: 300px;
@@ -132,6 +133,23 @@ nav a:visited { color: #FFFFFF; }
 .product_preview:hover img{
 	width: 400px;
 	left: -50px;
+}
+
+/*
+ * The Color Selection Widget
+ */
+.optional_color {
+	float: left;
+	margin: 5px;
+	width: 15px;
+	height: 15px;
+	border: dashed 1px black;
+	margin-top: 2px;
+	cursor: pointer;
+}
+.selected_color {
+	border: solid 3px black;
+	margin-top: 0px;
 }
 
 footer {

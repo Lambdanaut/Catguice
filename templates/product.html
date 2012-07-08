@@ -1,11 +1,34 @@
 {% extends "layout.html" %}
 {% block title %}{{ product['name'] }}{% endblock %}
 {% block head %}
+	<script>
+		$(document).ready(function () {
+			$(".more_product_image").click(function () {
+				clicked_image = this;
+				$("#current_preview").fadeOut("fast", function () {
+					$("#current_preview").attr("src", $(clicked_image).attr("src") );
+					$("#current_preview").fadeIn("fast")
+				});
+			});
+			$(".optional_color").click(function () {
+				$(this).parent().find(".optional_color").removeClass("selected_color")
+				$(this).addClass("selected_color")
+			});
+
+		});
+	</script>
 {% endblock %}
+{% macro drawColors(colors) %}
+	{% set firstColor = colors.pop(0) %}
+	<div class="optional_color selected_color" data-color="{{ firstColor }}" style="background-color: {{ firstColor }};"></div>
+	{% for color in colors %}
+		<div class="optional_color" data-color="{{ color }}" style="background-color: {{ color }};"></div>
+	{% endfor %}
+{% endmacro %}
 {% block content %}
 	<div class="grid_6">
-		<img src="/static/img/previewtest.jpg" class="product_image">
 		{% if product['images'] %}
+		<img src="{{ product['images'][0] }}" id="current_preview" class="product_image">
 			<div class="container" style="text-align:center;margin-top: 10px;">
 				<h4 style="margin-top: 0">More Photos</h4>
 				{% for image in product['images'] %}
@@ -20,7 +43,25 @@
 		{% endif %}
 	</div>
 	<div class="grid_6">
-		<h1>Awesome Shirt #12</h1>
+		<h1>{{ product['name'] }}</h1>
+		<p>{{ product['description'] | safe }}</p>
+		{% if product['primary_colors'] %}
+			<h1>Color</h1> 
+			<div id="primary_colors">
+				{{ drawColors(product['primary_colors'] )  }}
+			</div>
+		{% endif %}
+		<br> 
+		{% if product['secondary_colors'] %}
+			{% if product['secondary_color_name'] %}
+				<h1>{{ product['secondary_color_name'] }}</h1> 
+			{% else %}
+				<h1>Secondary Color</h1> 
+			{% endif %}
+			<div id="secondary_colors">
+				{{ drawColors(product['secondary_colors'] )  }}
+			</div>
+		{% endif %}
 	</div>
 	<div class="clear"></div>
 {% endblock %}
