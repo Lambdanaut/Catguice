@@ -1,6 +1,7 @@
 import pymongo
 import util
 
+
 class Categories:
   def __init__ (self, db):
     self.db = db.db
@@ -15,10 +16,10 @@ class Categories:
   def insert (self, data):
     if "name" in data and not "slug" in data:
       data["slug"] = util.slugify(data["name"])
-    self.categories.insert(data)
+    return self.categories.insert(data)
 
   def update (self, series, data):
-    self.categories.update(series, data)
+    return self.categories.update(series, data)
 
 class Products:
   def __init__ (self, db):
@@ -34,10 +35,14 @@ class Products:
   def insert (self, data):
     if "name" in data and not "slug" in data:
       data["slug"] = util.slugify(data["name"])
-    self.products.insert(data)
+    return self.products.insert(data)
 
   def update (self, series, data):
-    self.products.update(series, data)
+    return self.products.update(series, data)
+
+class Payments:
+  def __init__ (self, paypal):
+    self.paypal = paypal
 
 class Stats:
   def __init__ (self, db):
@@ -51,7 +56,7 @@ class Stats:
     return self.stats.find_one(series)
 
   def insert (self, data):
-    self.stats.insert(data)
+    return self.stats.insert(data)
 
   def update (self, series, data):
-    self.stats.update(series, data)
+    return self.stats.update(series, data)

@@ -1,11 +1,11 @@
 from flask import *
+import pymongo
 
 import os
 
 import config
 import forms
 import models
-import pymongo
 import util
 
 try:
@@ -29,6 +29,9 @@ db.authenticate(config.dbUsername, config.dbPassword)
 
 products_model = models.Products(db)
 categories_model = models.Categories(db)
+
+# Payment
+payment_con = paypal.PayPalInterface(API_USERNAME=config.PAYPAL_EMAIL, API_PASSWORD="1341779596")
 
 def main():
   app.run(host=config.HOST,port=config.PORT,debug=config.DEVELOPMENT)

@@ -28,7 +28,7 @@ PORT = int(os.environ.get('PORT', 5000))
 MY_EMAIL = "catguiceshop@gmail.com"
 
 # Paypal Account Information
-PAYPAL_EMAIL = ""
+PAYPAL_EMAIL = "josh_1341779572_biz_api1.gigbureau.com"
 
 # If this is set to True, then the server will set a few configuration options that make development easier.  
 # Set this to False when you're running the website in production mode. 
