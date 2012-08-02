@@ -32,6 +32,10 @@ header {
 	border-bottom: solid 1px black;
 }
 
+header a:hover {
+	text-decoration: none;
+}
+
 nav {
 	background-color: #B378DC;
 	border-bottom: solid 1px black;

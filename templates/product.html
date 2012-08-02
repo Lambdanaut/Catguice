@@ -13,15 +13,16 @@
 			$(".optional_color").click(function () {
 				$(this).parent().find(".optional_color").removeClass("selected_color")
 				$(this).addClass("selected_color")
+				$(this).parent().find("input").val( $(this).data("color") );
 			});
 
 		});
 	</script>
 {% endblock %}
 {% macro drawColors(colors) %}
-	{% set firstColor = colors.pop(0) %}
+	{% set firstColor = colors[0] %}
 	<div class="optional_color selected_color" data-color="{{ firstColor }}" style="background-color: {{ firstColor }};"></div>
-	{% for color in colors %}
+	{% for color in colors[1:] %}
 		<div class="optional_color" data-color="{{ color }}" style="background-color: {{ color }};"></div>
 	{% endfor %}
 {% endmacro %}
@@ -45,10 +46,12 @@
 	<div class="grid_6">
 		<h1>{{ product['name'] }}</h1>
 		<p>{{ product['description'] | safe }}</p>
+		<form>
 		{% if product['primary_colors'] %}
 			<h1>Color</h1> 
 			<div id="primary_colors">
-				{{ drawColors(product['primary_colors'] )  }}
+				{{ drawColors(product['primary_colors'] ) }}
+				<input type="hidden" name="primary_color" value="{{ product['primary_colors'][0] }}">
 			</div>
 		{% endif %}
 		<br> 
@@ -59,9 +62,13 @@
 				<h1>Secondary Color</h1> 
 			{% endif %}
 			<div id="secondary_colors">
-				{{ drawColors(product['secondary_colors'] )  }}
+				{{ drawColors(product['secondary_colors'] ) }}
+				<input type="hidden" name="secondary_color" value="{{ product['secondary_colors'][0] }}">
 			</div>
 		{% endif %}
+		<br><br>
+		<input type="submit" value="Purchase">
+		</form>
 	</div>
 	<div class="clear"></div>
 {% endblock %}

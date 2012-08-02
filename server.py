@@ -4,7 +4,6 @@ import pymongo
 import os
 
 import config
-import forms
 import models
 import util
 
