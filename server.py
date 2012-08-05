@@ -4,6 +4,7 @@ import pymongo
 import os
 
 import config
+import mail
 import models
 import util
 
@@ -76,8 +77,8 @@ def admincp():
     if request.form['admin_password'] == secrets.admin_password:
       session['admin_password']=secrets.admin_password
       session.permanent = True
-      return render_template("admincp.html", admin=True)
-    return render_template("admincp.html", admin=False)
+      return redirect(url_for('admincp', admin=True))
+    return redirect(url_for('admincp', admin=False))
   elif request.method == 'GET':
     categories = categories_model.get()
     return render_template("admincp.html", categories=categories)
