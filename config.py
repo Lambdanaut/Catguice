@@ -27,6 +27,13 @@ PORT = int(os.environ.get('PORT', 5000))
 # The email address to use for all product sales and customer interaction 
 MY_EMAIL = "catguiceshop@gmail.com"
 
+# The email address to send all emails when the DEVELOPMENT constant is set to True
+TESTING_EMAIL = "personettelabs@gmail.com"
+
+# Determines whether emails will be sent or not. 
+# Set this to False if you don't want to send emails while in testing. 
+SEND_EMAILS = True
+
 # If this is set to True, then the server will set a few configuration options that make development easier.  
 # Set this to False when you're running the website in production mode. 
 DEVELOPMENT = True

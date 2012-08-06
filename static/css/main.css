@@ -1,5 +1,4 @@
 /* The main Catguice specific CSS */
-
 body {
 	font-family: 'Short Stack', cursive;
 	background-color: #4CCC4C;
@@ -93,6 +92,18 @@ nav a:visited { color: #FFFFFF; }
 .more_product_image {
 	width: 100px;
 	cursor: pointer;
+}
+
+/*
+ * Admincp
+ */
+.delete_button {
+	cursor: pointer;
+	color: #AA0000;
+}
+.delete_button:hover {
+	cursor: pointer;
+	color: #FF0000;
 }
 
 /*

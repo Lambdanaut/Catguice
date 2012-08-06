@@ -58,12 +58,20 @@ def product(product_slug):
   if not product: abort(404)
   return render_template("product.html", product=product)
 
-@app.route("/categories/<category_slug>")
+@app.route("/categories/<category_slug>", methods=['GET', 'POST'])
 def category(category_slug):
-  category = categories_model.get_one({"slug" : category_slug.lower()})
-  if not category: abort(404)
-  products = products_model.get({"category" : category['name'] })
-  return render_template("category.html", category=category, products=products)
+  print request.method
+  if request.method == 'GET':
+    category = categories_model.get_one({"slug" : category_slug.lower()})
+    if not category: abort(404)
+    products = products_model.get({"category" : category['name'] })
+    return render_template("category.html", category=category, products=products)
+  elif request.method == 'POST':
+    # Delete the category
+    if g.admin:
+      categories_model.delete({"slug" : category_slug.lower()})
+      flash("Category and all of its Associated Products Deleted Successfully")
+      return redirect(url_for('admincp'))
 
 @app.route("/about")
 def about():
@@ -120,9 +128,10 @@ def add_category():
       if request.form['category_description']: description = request.form['category_description']
       else:                                    description = None
       cat_data = {
-        'name'       : request.form['category_name']
-      , 'description' : description
-      , 'image'       : request.form['category_image']
+        'name'          : request.form['category_name']
+      , 'singular_name' : request.form['category_singular_name']
+      , 'description'   : description
+      , 'image'         : request.form['category_image']
       }
       categories_model.insert(cat_data)
       flash("Category Added Successfully")

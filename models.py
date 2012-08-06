@@ -21,6 +21,12 @@ class Categories:
   def update (self, series, data):
     return self.categories.update(series, data)
 
+  def delete (self, series):
+    category = self.get_one(series)
+    products_model = Products(self.db)
+    products_model.delete({"category" : category['name'] })
+    return self.categories.remove(series)
+
 class Products:
   def __init__ (self, db):
     self.db = db.db
@@ -39,6 +45,9 @@ class Products:
 
   def update (self, series, data):
     return self.products.update(series, data)
+
+  def delete(self, series):
+    return self.products.remove(series)
 
 class Payments:
   def __init__ (self, paypal):
