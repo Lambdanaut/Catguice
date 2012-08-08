@@ -3,12 +3,18 @@
 {% block head %}
 	<script>
 		$(document).ready(function () {
-			$(".delete_category").click(function (){
+			$(".delete_category, .delete_product").click(function (){
 				var conf1 = confirm("Are you SURE you want to delete this category and ALL of its associated products? ");
-				var conf2 = confirm("The category AND all of the associated products..? Really..? ");
-				var conf3 = confirm("You're serious about this? ");
-				if (conf1 && conf2 && conf3) {
-					$(this).parent().submit();
+				if (conf1) {
+					var conf2 = confirm("The category AND all of the associated products..? Really..? ");
+					if (conf2) {
+						var conf3 = confirm("You're serious about this? ");
+						if (conf3) {
+							if (conf1 && conf2 && conf3) {
+								$(this).parent().submit();
+							}
+						}
+					}
 				}
 			});
 		});
@@ -37,7 +43,7 @@
 						<label for="product_category" style="display:block">Category: </label>
 						<select name="product_category" id="product_category">
 							{% for category in categories %}
-							<option value="{{ category["name"] }}">{{ category["name"] }}</option>
+							<option value="{{ category["slug"] }}">{{ category["name"] }}</option>
 							{% endfor %}
 						</select>
 						<input type="submit" value="Add Product" style="display: block; margin-top: 20px;">
@@ -68,23 +74,41 @@
 		<div class="grid_4">
 			<h2>Modify Products</h2>
 			<div class="container">
-				THIS IS A WIP. You can't delete products yet. 
+				<ul>
+					{% if products.count() %}
+					{% for product in products %}
+					<li>
+						{{ product['category'] }}
+						<form method="POST" action="{{ url_for("product", product_slug = product['slug']) }}">
+							<strong>{{ product['name'] }}</strong> -- 
+							<span class="delete_product delete_button">DELETE</span>
+						</form>
+					</li>
+					{% endfor %}
+					{% else %}
+						You must add some <em>Products</em>.
+					{% endif %}	
+				</ul>
 			</div>
 		</div>
 		<div class="grid_4">
 			<h2>Modify Categories</h2>
 			<div class="container">
 				{% set throwaway = categories.rewind() %}
+				{% if categories.count() %}
+				{% for category in categories %}
 				<ul>
-					{% for category in categories %}
-						<li>
-							<form method="POST" action="{{ url_for("category", category_slug = category['slug']) }}">
-								<strong>{{ category['name'] }}</strong> -- 
-								<span class="delete_category delete_button">DELETE</span>
-							</form>
-						</li>
-					{% endfor %}
+					<li>
+						<form method="POST" action="{{ url_for("category", category_slug = category['slug']) }}">
+							<strong>{{ category['name'] }}</strong> -- 
+							<span class="delete_category delete_button">DELETE</span>
+						</form>
+					</li>
 				</ul>
+				{% endfor %}
+				{% else %}
+					You must add some <em>Categories</em>.
+				{% endif %}	
 			</div>
 		</div>
 		<div class="clear"></div>

@@ -4,7 +4,8 @@ import util
 
 class Categories:
   def __init__ (self, db):
-    self.db = db.db
+    self.con = db
+    self.db = self.con.db
     self.categories = db.catguice_categories
 
   def get (self, series = {}):
@@ -23,13 +24,15 @@ class Categories:
 
   def delete (self, series):
     category = self.get_one(series)
-    products_model = Products(self.db)
-    products_model.delete({"category" : category['name'] })
+    products_model = Products(self.con)
+    products_model.delete({"category" : category['slug'] })
     return self.categories.remove(series)
 
 class Products:
   def __init__ (self, db):
-    self.db = db.db
+    self.con = db
+    self.db = self.con.db
+    self.categories = db.catguice_categories
     self.products = db.catguice_products
 
   def get (self, series = {}):
@@ -55,7 +58,8 @@ class Payments:
 
 class Stats:
   def __init__ (self, db):
-    self.db = db.db
+    self.con = db
+    self.db = self.con.db
     self.stats = db.catguice_stats
 
   def get (self, series = {}):

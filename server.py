@@ -52,19 +52,24 @@ def index():
   categories = categories_model.get()
   return render_template("index.html", categories=categories)
 
-@app.route("/product/<product_slug>")
+@app.route("/product/<product_slug>", methods=['GET', 'POST'])
 def product(product_slug):
-  product = products_model.get_one({"slug" : product_slug.lower()})
-  if not product: abort(404)
-  return render_template("product.html", product=product)
+  if request.method == 'GET':
+    product = products_model.get_one({"slug" : product_slug.lower()})
+    if not product: abort(404)
+    return render_template("product.html", product=product)
+  elif request.method == 'POST':
+    # Delete the product
+    products_model.delete({"slug" : product_slug})
+    flash("Product <strong>" + product_slug + "</strong> Deleted Successfully")
+    return redirect(url_for('admincp'))
 
 @app.route("/categories/<category_slug>", methods=['GET', 'POST'])
 def category(category_slug):
-  print request.method
   if request.method == 'GET':
     category = categories_model.get_one({"slug" : category_slug.lower()})
     if not category: abort(404)
-    products = products_model.get({"category" : category['name'] })
+    products = products_model.get({"category" : category['slug'] })
     return render_template("category.html", category=category, products=products)
   elif request.method == 'POST':
     # Delete the category
@@ -88,8 +93,9 @@ def admincp():
       return redirect(url_for('admincp', admin=True))
     return redirect(url_for('admincp', admin=False))
   elif request.method == 'GET':
+    products = products_model.get()
     categories = categories_model.get()
-    return render_template("admincp.html", categories=categories)
+    return render_template("admincp.html", products=products, categories=categories)
  
 @app.route("/admincp/add_product", methods=['POST'])
 def add_product():
