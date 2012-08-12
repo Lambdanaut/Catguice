@@ -78,7 +78,6 @@
 					{% if products.count() %}
 					{% for product in products %}
 					<li>
-						{{ product['category'] }}
 						<form method="POST" action="{{ url_for("product", product_slug = product['slug']) }}">
 							<strong>{{ product['name'] }}</strong> -- 
 							<span class="delete_product delete_button">DELETE</span>

@@ -52,17 +52,39 @@ def index():
   categories = categories_model.get()
   return render_template("index.html", categories=categories)
 
+@app.route("/about")
+def about():
+  return render_template("about.html")
+
 @app.route("/product/<product_slug>", methods=['GET', 'POST'])
 def product(product_slug):
   if request.method == 'GET':
     product = products_model.get_one({"slug" : product_slug.lower()})
     if not product: abort(404)
-    return render_template("product.html", product=product)
+    category = categories_model.get_one({"slug" : product['category'] })
+    return render_template("product.html", product=product, category=category)
   elif request.method == 'POST':
     # Delete the product
     products_model.delete({"slug" : product_slug})
     flash("Product <strong>" + product_slug + "</strong> Deleted Successfully")
     return redirect(url_for('admincp'))
+
+@app.route("/product/<product_slug>/purchase", methods=['GET', 'POST'])
+def purchase_product(product_slug):
+  product = products_model.get_one({"slug" : product_slug.lower() })
+  if not product: abort(404)
+  if request.method == 'GET':
+    # Purchase Success
+    category = products_model.get_one({"slug" : product['category'] })
+    return render_template("purchase_success.html", product=product, category=category)
+  if request.method == 'POST':
+    # Purchase Submission
+    if request.form['primary_color']: primary_color = util.split_product_list(request.form['primary_color'])
+    else:                             primary_color = []
+    if request.form['secondary_color']: secondary_color = util.split_product_list(request.form['secondary_color'])
+    else:                               secondary_color = []
+    flash("Category Added Successfully")
+    return redirect(url_for('purchase_product'))
 
 @app.route("/categories/<category_slug>", methods=['GET', 'POST'])
 def category(category_slug):
@@ -77,10 +99,6 @@ def category(category_slug):
       categories_model.delete({"slug" : category_slug.lower()})
       flash("Category and all of its Associated Products Deleted Successfully")
       return redirect(url_for('admincp'))
-
-@app.route("/about")
-def about():
-  return render_template("about.html")
 
 @app.route("/admincp", methods=['GET','POST'])
 def admincp():
@@ -127,7 +145,7 @@ def add_category():
   if g.admin:
     if request.method == 'POST':
       # Make sure all the required fields were found. 
-      product_fields = ['category_name', 'category_description', 'category_image']
+      product_fields = ['category_name', 'category_singular_name', 'category_description', 'category_image']
       if not all(map(lambda p: p in request.form, product_fields) ):
         return "There was an error processing your request. Not all of the required fields were found to be submitted. "
       if not request.form['category_name']: return "The category name is required"
