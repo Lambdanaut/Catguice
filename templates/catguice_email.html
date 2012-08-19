@@ -11,8 +11,9 @@ Product
 Product: <a href="{{ url_for('product', product_slug=product['slug']) }}">{{ product['name'] }}</a>
 {% if 'primary_color' in client %}
 	Color: {{ client['primary_color'] }}
-{% else %}
-	Color: (default color)
+{% endif %}
+{% if 'size' in client %}
+	Size: {{ client['size'] }}
 {% endif %}
 
 - Catherine
