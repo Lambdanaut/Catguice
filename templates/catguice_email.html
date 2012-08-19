@@ -1,0 +1,18 @@
+YO, You got an order. 
+
+Client Information
+==================
+Name: {{ client['client_name'] }}
+Email: {{ client['contact_email'] }} 
+Paypal: {{ client['paypal_email'] }} 
+
+Product
+=======
+Product: <a href="{{ url_for('product', product_slug=product['slug']) }}">{{ product['name'] }}</a>
+{% if 'primary_color' in client %}
+	Color: {{ client['primary_color'] }}
+{% else %}
+	Color: (default color)
+{% endif %}
+
+- Catherine

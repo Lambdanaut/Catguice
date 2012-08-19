@@ -24,7 +24,6 @@ except:
 	print "Couldn't connect to the sendgrid servers using given credentials. "
 	raise
 
-
 def send_mail(send_to, send_from, subject, body, send_to_name = None):
 	if config.SEND_EMAILS:
 		if config.DEVELOPMENT:

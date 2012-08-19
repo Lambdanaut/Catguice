@@ -32,7 +32,7 @@ TESTING_EMAIL = "personettelabs@gmail.com"
 
 # Determines whether emails will be sent or not. 
 # Set this to False if you don't want to send emails while in testing. 
-SEND_EMAILS = True
+SEND_EMAILS = False 
 
 # If this is set to True, then the server will set a few configuration options that make development easier.  
 # Set this to False when you're running the website in production mode. 

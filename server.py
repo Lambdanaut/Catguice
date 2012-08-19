@@ -69,22 +69,28 @@ def product(product_slug):
     flash("Product <strong>" + product_slug + "</strong> Deleted Successfully")
     return redirect(url_for('admincp'))
 
-@app.route("/product/<product_slug>/purchase", methods=['GET', 'POST'])
+@app.route("/product/<product_slug>/purchase", methods=['POST'])
 def purchase_product(product_slug):
   product = products_model.get_one({"slug" : product_slug.lower() })
   if not product: abort(404)
-  if request.method == 'GET':
-    # Purchase Success
-    category = products_model.get_one({"slug" : product['category'] })
-    return render_template("purchase_success.html", product=product, category=category)
-  if request.method == 'POST':
-    # Purchase Submission
-    if request.form['primary_color']: primary_color = util.split_product_list(request.form['primary_color'])
-    else:                             primary_color = []
-    if request.form['secondary_color']: secondary_color = util.split_product_list(request.form['secondary_color'])
-    else:                               secondary_color = []
-    flash("Category Added Successfully")
-    return redirect(url_for('purchase_product'))
+  category = categories_model.get_one({"slug" : product['category'] })
+  # Mail Catguice
+  purchase_catguice_subject = "Purchase from " + request.form['client_name']
+  purchase_catguice_email = render_template("catguice_email.html", client=request.form, product=product, category=category)
+  mail.send_mail(config.MY_EMAIL, config.MY_EMAIL, purchase_catguice_subject, purchase_catguice_email)
+  # Mail Client
+  purchase_catguice_subject = "Instructions for Completing your Purchase"
+  purchase_catguice_email = render_template("customer_email.html", client=request.form, category=category)
+  mail.send_mail(config.MY_EMAIL, config.MY_EMAIL, purchase_catguice_subject, purchase_catguice_email)
+  return redirect(url_for('purchase_product_success', product_slug=product_slug))
+
+@app.route("/product/<product_slug>/purchase_success", methods=['GET'])
+def purchase_product_success(product_slug):
+  # Purchase Success
+  product = products_model.get_one({"slug" : product_slug.lower() })
+  if not product: abort(404)
+  category = categories_model.get_one({"slug" : product['category'] })
+  return render_template("purchase_success.html", product=product, category=category)
 
 @app.route("/categories/<category_slug>", methods=['GET', 'POST'])
 def category(category_slug):
@@ -120,7 +126,7 @@ def add_product():
   if g.admin:
     if request.method == 'POST':
       # Make sure all the required fields were found. 
-      product_fields = ['product_name', 'product_description', 'product_images', 'product_primary_colors', 'product_secondary_color_name', 'product_secondary_colors', 'product_category']
+      product_fields = ['product_name', 'product_description', 'product_images', 'product_primary_colors', 'product_secondary_color_name', 'product_secondary_colors', 'product_sizes', 'product_category']
       if not all(map(lambda p: p in request.form, product_fields) ):
         return "There was an error processing your request. Not all of the required fields were found to be submitted. "
       if not request.form['product_name']: return "The product name is required"
@@ -134,6 +140,7 @@ def add_product():
       , 'primary_colors'       : util.split_product_list(request.form['product_primary_colors'])
       , 'secondary_color_name' : request.form['product_secondary_color_name']
       , 'secondary_colors'     : util.split_product_list(request.form['product_secondary_colors'])
+      , 'sizes'                : util.split_product_list(request.form['product_sizes'])
       , 'category'             : request.form['product_category']
       }
       products_model.insert(product_data)

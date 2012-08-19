@@ -49,13 +49,22 @@
 		<form action="{{ url_for("purchase_product", product_slug=product['slug'] ) }}" method="POST">
 		<h1>Order Form</h1>
 		{% if product['primary_colors'] %}
-			<h2>{{ category['singular_name'] }} Color</h2> 
+			<h2>Your {{ category['singular_name'] }} Color</h2><p></p> 
 			<div id="primary_colors">
 				{{ drawColors(product['primary_colors'] ) }}
 				<input type="hidden" name="primary_color" id="primary_color" value="{{ product['primary_colors'][0] }}">
 			</div>
+		<br>
 		{% endif %}
+		{% if product['sizes'] %}
+			<h2>Your {{ category['singular_name'] }} Size</h2><p></p> 
+			<select name="size" id="size">
+				{% for size in product['sizes'] %}
+				<option value="{{ size }}">{{ size }}</option>
+				{% endfor %}
+			</select>
 		<br> 
+		{% endif %}
 		{% if product['secondary_colors'] %}
 			{% if product['secondary_color_name'] %}
 				<h2>{{ product['secondary_color_name'] }}</h2> 
@@ -67,12 +76,14 @@
 				<input type="hidden" name="secondary_color" id="secondary_color" value="{{ product['secondary_colors'][0] }}">
 			</div>
 		{% endif %}
+			<h2><label for="client_name">Your Name</label></h2> 
+			<input type="text" name="client_name" id="client_name">
 			<h2><label for="contact_email">Your Email Address</label></h2> 
 			<input type="email" name="contact_email" id="contact_email">
 			<h2><label for="paypal_email">Your Paypal Address</label></h2> 
-			<p></p>
 			<input type="email" name="paypal_email" id="paypal_email">
-
+			<h2><label for="address">Your Mailing Address</label></h2> 
+			<textarea name="address" id="address" placeholder="Ex: 1234 Coolbeans Rd New York City, NY 10452" rows="3" style="width: 100%;"></textarea>
 		<br><br>
 		<input type="submit" value="Purchase">
 		</form>
