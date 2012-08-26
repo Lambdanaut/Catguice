@@ -16,7 +16,7 @@ Product: <a href="{{ url_for('product', product_slug=product['slug']) }}">{{ pro
 	Color: {{ client['primary_color'] }}
 {% endif %}
 {% if 'secondary_color' in client %}
-	Secondary Color: {{ client['secondary_color'] }}
+	Secondary Color: {% if client['secondary_color_enabled'] %}{{ client['secondary_color'] }}{% else %}(Secondary Color Disabled){% endif %}
 {% endif %}
 {% if 'size' in client %}
 	Size: {{ client['size'] }}

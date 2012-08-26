@@ -147,16 +147,19 @@ def add_product():
       if not request.form['product_category']: return "The category is required"
       if request.form['product_description']: description = request.form['product_description']
       else:                                   description = None
+      if 'product_secondary_color_optional' in request.form: secondary_color_optional = True
+      else:                                                  secondary_color_optional = False
       product_data = {
-        'name'                 : request.form['product_name']
-      , 'description'          : description
-      , 'price'                : request.form['product_price']
-      , 'images'               : util.split_product_list(request.form['product_images'])
-      , 'primary_colors'       : util.split_product_list(request.form['product_primary_colors'])
-      , 'secondary_color_name' : request.form['product_secondary_color_name']
-      , 'secondary_colors'     : util.split_product_list(request.form['product_secondary_colors'])
-      , 'sizes'                : util.split_product_list(request.form['product_sizes'])
-      , 'category'             : request.form['product_category']
+        'name'                     : request.form['product_name']
+      , 'description'              : description
+      , 'price'                    : request.form['product_price']
+      , 'images'                   : util.split_product_list(request.form['product_images'])
+      , 'primary_colors'           : util.split_product_list(request.form['product_primary_colors'])
+      , 'secondary_color_name'     : request.form['product_secondary_color_name']
+      , 'secondary_colors'         : util.split_product_list(request.form['product_secondary_colors'])
+      , 'secondary_color_optional' : secondary_color_optional
+      , 'sizes'                    : util.split_product_list(request.form['product_sizes'])
+      , 'category'                 : request.form['product_category']
       }
       products_model.insert(product_data)
       flash("Product Added Successfully")

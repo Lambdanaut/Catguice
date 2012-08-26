@@ -8,22 +8,28 @@
 				var clicked_image = this;
 				$("#current_preview").fadeOut("fast", function () {
 					$("#current_preview").attr("src", $(clicked_image).attr("src") );
-					$("#current_preview").fadeIn("fast")
+					$("#current_preview").fadeIn("fast");
 				});
 			});
 			// Color Selection 
 			$(".optional_color").click(function () {
-				$(this).parent().find(".optional_color").removeClass("selected_color")
-				$(this).addClass("selected_color")
+				$(this).parent().find(".optional_color").removeClass("selected_color");
+				$(this).addClass("selected_color");
 				$(this).parent().find("input").val( $(this).data("color") );
+			});
+			// Disabling Secondary Color
+			$("#secondary_color_enabled").click(function () {
+				$("#secondary_colors").toggle();
+				$("#secondary_colors_hidden_text").toggle();
 			});
 			// Total Price Calculation
 			$("#shipping_price").change(function () {
 				var base_price = $("#base_price").text();
-				var shipping_price = $("#shipping_price").val()
+				var shipping_price = $("#shipping_price").val();
+				var total_price = parseFloat(base_price) + parseFloat(shipping_price);
 				$("#ship_base_price").text(base_price);
 				$("#ship_shipping_price").text(shipping_price);
-				$("#ship_total_price").text(parseFloat(base_price) + parseFloat(shipping_price) );
+				$("#ship_total_price").text( total_price.toPrecision(3) );
 			});
 			$("#shipping_price").trigger("change");
 		});
@@ -73,14 +79,21 @@
 			{% endif %}
 			{% if product['secondary_colors'] %}
 				{% if product['secondary_color_name'] %}
-					<h2>{{ product['secondary_color_name'] }}</h2> 
+					{% set secondary_color_name = product['secondary_color_name'] + " Color" %}
 				{% else %}
-					<h2>Secondary Color</h2> 
+					{% set secondary_color_name = "Secondary Color" %}
 				{% endif %}
+				<h2>
+				{{ secondary_color_name }}
+				{% if product['secondary_color_optional'] %}
+					<input type="checkbox" name="secondary_color_enabled" id="secondary_color_enabled" checked="checked">
+				{% endif %}
+				</h2>
 				<div id="secondary_colors">
 					{{ drawColors(product['secondary_colors'] ) }}
 					<input type="hidden" name="secondary_color" id="secondary_color" value="{{ product['secondary_colors'][0] }}">
 				</div>
+				<div id="secondary_colors_hidden_text" style="display:none;">{{ secondary_color_name }} won't be used. </div>
 				<br>
 			{% endif %}
 			{% if product['sizes'] %}
