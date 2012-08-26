@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block title %}Custom Order Success{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+<h1>Your Inquiry has Been Successfully Sent! </h1>
+<p>I'll send you an email with a price quote and more information about your product ASAP! </p> 
+<p>In the meantime, <a href="{{ url_for("index") }}">Click Here</a> to browse more products.</p>
+{% endblock %}

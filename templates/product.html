@@ -3,19 +3,29 @@
 {% block head %}
 	<script>
 		$(document).ready(function () {
+			// Product Preview
 			$(".more_product_image").click(function () {
-				clicked_image = this;
+				var clicked_image = this;
 				$("#current_preview").fadeOut("fast", function () {
 					$("#current_preview").attr("src", $(clicked_image).attr("src") );
 					$("#current_preview").fadeIn("fast")
 				});
 			});
+			// Color Selection 
 			$(".optional_color").click(function () {
 				$(this).parent().find(".optional_color").removeClass("selected_color")
 				$(this).addClass("selected_color")
 				$(this).parent().find("input").val( $(this).data("color") );
 			});
-
+			// Total Price Calculation
+			$("#shipping_price").change(function () {
+				var base_price = $("#base_price").text();
+				var shipping_price = $("#shipping_price").val()
+				$("#ship_base_price").text(base_price);
+				$("#ship_shipping_price").text(shipping_price);
+				$("#ship_total_price").text(parseFloat(base_price) + parseFloat(shipping_price) );
+			});
+			$("#shipping_price").trigger("change");
 		});
 	</script>
 {% endblock %}
@@ -46,47 +56,71 @@
 	<div class="grid_6">
 		<h1>{{ product['name'] }}</h1>
 		<p>{{ product['description'] | safe }}</p>
-		<form action="{{ url_for("purchase_product", product_slug=product['slug'] ) }}" method="POST">
-		<h1>Order Form</h1>
-		{% if product['primary_colors'] %}
-			<h2>Your {{ category['singular_name'] }} Color</h2><p></p> 
-			<div id="primary_colors">
+		{% if product['price'] %}
+			<h2 style="display:inline;">Price: </h2>
+			$<span id="base_price">{{ product['price'] }}</span>
+		{% endif %}
+		{% if category['purchasable'] %}
+			<form action="{{ url_for("purchase_product", product_slug=product['slug'] ) }}" method="POST">
+			<h1>Order Form</h1>
+			{% if product['primary_colors'] %}
+				<h2>Your {{ category['singular_name'] }} Color</h2><p></p> 
+				<div id="primary_colors">	
 				{{ drawColors(product['primary_colors'] ) }}
-				<input type="hidden" name="primary_color" id="primary_color" value="{{ product['primary_colors'][0] }}">
-			</div>
-		<br>
-		{% endif %}
-		{% if product['sizes'] %}
-			<h2>Your {{ category['singular_name'] }} Size</h2><p></p> 
-			<select name="size" id="size">
-				{% for size in product['sizes'] %}
-				<option value="{{ size }}">{{ size }}</option>
-				{% endfor %}
-			</select>
-		<br> 
-		{% endif %}
-		{% if product['secondary_colors'] %}
-			{% if product['secondary_color_name'] %}
-				<h2>{{ product['secondary_color_name'] }}</h2> 
-			{% else %}
-				<h2>Secondary Color</h2> 
+					<input type="hidden" name="primary_color" id="primary_color" value="{{ product['primary_colors'][0] }}">
+				</div>
+				<br>
 			{% endif %}
-			<div id="secondary_colors">
-				{{ drawColors(product['secondary_colors'] ) }}
-				<input type="hidden" name="secondary_color" id="secondary_color" value="{{ product['secondary_colors'][0] }}">
-			</div>
+			{% if product['secondary_colors'] %}
+				{% if product['secondary_color_name'] %}
+					<h2>{{ product['secondary_color_name'] }}</h2> 
+				{% else %}
+					<h2>Secondary Color</h2> 
+				{% endif %}
+				<div id="secondary_colors">
+					{{ drawColors(product['secondary_colors'] ) }}
+					<input type="hidden" name="secondary_color" id="secondary_color" value="{{ product['secondary_colors'][0] }}">
+				</div>
+				<br>
+			{% endif %}
+			{% if product['sizes'] %}
+				<h2>Your {{ category['singular_name'] }} Size</h2><p></p> 
+				<select name="size" id="size">
+					{% for size in product['sizes'] %}
+					<option value="{{ size }}"{% if size == 'Medium' %} selected="selected"{% endif %}>{{ size }}</option>
+					{% endfor %}
+				</select>
+				<br> 
+			{% endif %}
+				<h2><label for="client_name">Your Name</label></h2> 
+				<input type="text" name="client_name" id="client_name">
+				<h2><label for="contact_email">Your Email Address</label></h2> 
+				<input type="email" name="contact_email" id="contact_email">
+				<h2><label for="paypal_email">Your Paypal Address</label></h2> 
+				<input type="email" name="paypal_email" id="paypal_email">
+				<h2><label for="address">Your Mailing Address</label></h2> 
+				<textarea name="address" id="address" placeholder="Ex: 1234 Coolbeans Rd New York City, NY 10452" rows="3" style="width: 100%;"></textarea>
+				<h2>Shipping Cost</h2><p></p> 
+				<select name="shipping_price" id="shipping_price">
+					<option value="0.00">USA (FREE)</option>
+					<option value="4.00">Canada (+$4)</option>
+					<option value="8.00">Europe (+$8)</option>
+					<option value="10.00">Elsewhere (+$10)</option>
+				</select><br>
+				{% if product['price'] %}
+					<strong>{{ category['singular_name'] }} Price: </strong>$<span id="ship_base_price"></span><br>
+					<strong>Plus Shipping: </strong>$<span id="ship_shipping_price"></span><br>
+					<strong>Total Price: </strong><span class="double_underline">$<span id="ship_total_price"></span></span><br>
+					<br> 
+				{% endif %}
+				<h2><label for="additional_comments">Additional Comments</label></h2> 
+				<textarea name="additional_comments" id="additional_comments" rows="3" style="width: 100%;"></textarea>
+			<br><br>
+			<input type="submit" value="Purchase">
+			</form>
+		{% else %}
+			<h2>This Item is not Available for Purchase</h2>
 		{% endif %}
-			<h2><label for="client_name">Your Name</label></h2> 
-			<input type="text" name="client_name" id="client_name">
-			<h2><label for="contact_email">Your Email Address</label></h2> 
-			<input type="email" name="contact_email" id="contact_email">
-			<h2><label for="paypal_email">Your Paypal Address</label></h2> 
-			<input type="email" name="paypal_email" id="paypal_email">
-			<h2><label for="address">Your Mailing Address</label></h2> 
-			<textarea name="address" id="address" placeholder="Ex: 1234 Coolbeans Rd New York City, NY 10452" rows="3" style="width: 100%;"></textarea>
-		<br><br>
-		<input type="submit" value="Purchase">
-		</form>
 	</div>
 	<div class="clear"></div>
 {% endblock %}

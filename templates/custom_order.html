@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %}Create a Custom Order{% endblock %}
+{% block head %}
+<style>
+label {
+	display: block;
+	font-weight: bold;
+}
+</style>
+{% endblock %}
+{% block content %}
+	<h1>Create a Custom Order</h1>
+	<p>Of course all our orders from Catguice are custom works of art, but we know that sometimes the Artist in you wants full control over the things you own. That's why Catguice provides this page for filling out a more specific order. You can send in any idea you think of, and we'll quote you a price. Typical custom shirts quotes are between <strong>$25</strong> and <strong>$50</strong>. </p>
+	<form action="{{ url_for("custom_order") }}" method="post">
+		<label for="name">Your Name</label>
+		<input type="text" name="name" id="name">
+		<label for="email">Email Address</label>
+		<input type="email" name="email" id="email">
+		<label for="inquiry">Custom Order Description</label>
+		<textarea name="inquiry" id="inquiry" cols="120" rows="10" style="display:block;"></textarea>	
+		<input type="submit" value="Inquire Order">
+	</form>
+{% endblock %}

@@ -50,11 +50,25 @@ def inject_template():
 def index():
   featured_products = products_model.get(series = {"featured" : True})
   categories = categories_model.get()
-  return render_template("index.html", categories=categories)
+  if categories.count() == 1:
+    return redirect(url_for('category', category_slug = categories[0]['slug']))
+  else:
+    return render_template("index.html", categories=categories)
 
 @app.route("/about")
 def about():
   return render_template("about.html")
+
+@app.route("/custom_order", methods=['GET', 'POST'])
+def custom_order():
+  if request.method == 'GET':
+    return render_template("custom_order.html")
+  if request.method == 'POST':
+    # Mail Catguice
+    inquire_catguice_subject = "Custom Order from " + request.form['name']
+    inquire_catguice_email = render_template("custom_order_email.html", client=request.form)
+    mail.send_mail(config.MY_EMAIL, config.MY_EMAIL, inquire_catguice_subject, inquire_catguice_email)
+    return render_template("custom_order_success.html")
 
 @app.route("/product/<product_slug>", methods=['GET', 'POST'])
 def product(product_slug):
@@ -126,7 +140,7 @@ def add_product():
   if g.admin:
     if request.method == 'POST':
       # Make sure all the required fields were found. 
-      product_fields = ['product_name', 'product_description', 'product_images', 'product_primary_colors', 'product_secondary_color_name', 'product_secondary_colors', 'product_sizes', 'product_category']
+      product_fields = ['product_name', 'product_description', 'product_price', 'product_images', 'product_primary_colors', 'product_secondary_color_name', 'product_secondary_colors', 'product_sizes', 'product_category']
       if not all(map(lambda p: p in request.form, product_fields) ):
         return "There was an error processing your request. Not all of the required fields were found to be submitted. "
       if not request.form['product_name']: return "The product name is required"
@@ -136,6 +150,7 @@ def add_product():
       product_data = {
         'name'                 : request.form['product_name']
       , 'description'          : description
+      , 'price'                : request.form['product_price']
       , 'images'               : util.split_product_list(request.form['product_images'])
       , 'primary_colors'       : util.split_product_list(request.form['product_primary_colors'])
       , 'secondary_color_name' : request.form['product_secondary_color_name']
@@ -152,17 +167,20 @@ def add_category():
   if g.admin:
     if request.method == 'POST':
       # Make sure all the required fields were found. 
-      product_fields = ['category_name', 'category_singular_name', 'category_description', 'category_image']
-      if not all(map(lambda p: p in request.form, product_fields) ):
+      category_fields = ['category_name', 'category_singular_name', 'category_description', 'category_image']
+      if not all(map(lambda c: c in request.form, category_fields) ):
         return "There was an error processing your request. Not all of the required fields were found to be submitted. "
       if not request.form['category_name']: return "The category name is required"
       if request.form['category_description']: description = request.form['category_description']
       else:                                    description = None
+      if 'category_purchasable' in request.form: purchasable = True
+      else:                                      purchasable = False
       cat_data = {
         'name'          : request.form['category_name']
       , 'singular_name' : request.form['category_singular_name']
       , 'description'   : description
       , 'image'         : request.form['category_image']
+      , 'purchasable'   : purchasable
       }
       categories_model.insert(cat_data)
       flash("Category Added Successfully")

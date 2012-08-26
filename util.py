@@ -17,3 +17,4 @@ def split_product_list(text):
   return filter(lambda x: x, text.strip().split('\r\n') )
 
 len = len
+float = float

@@ -36,9 +36,10 @@
 					<form method="POST" action="{{ url_for("add_product") }}">
 						<label for="product_name" style="display:block">Name: </label><input type="text" name="product_name" id="product_name">
 						<label for="product_description" style="display:block">Description: </label><textarea name="product_description" id="product_description" class="stretch" cols="34" rows="10" style="margin-bottom: 10px;"></textarea>
+						<label for="product_price" style="display:block">Price: </label>$<input type="text" name="product_price" id="product_price" placeholder="Ex: 25.00; 17.50; 1.75">
 						<label for="product_images" style="display:block">Image Links: </label><textarea placeholder="One Image Link Per Line" name="product_images" id="product_images" class="stretch" cols="34" rows="5"></textarea>
 						<label for="product_primary_colors" style="display:block">Primary Colors: </label><textarea placeholder="One Color Per Line" name="product_primary_colors" id="product_primary_colors" class="stretch" cols="34" rows="5"></textarea>
-						<label for="product_secondary_color_name" style="display:block">Secondary Color Name: </label><input type="text" name="product_secondary_color_name" id="product_secondary_color_name">
+						<label for="product_secondary_color_name" style="display:block">Secondary Color Name: </label><input type="text" name="product_secondary_color_name" id="product_secondary_color_name" placeholder="Ex: Splatter; Thorn Vine; Cords;">
 						<label for="product_secondary_colors" style="display:block">Secondary Colors: </label><textarea placeholder="One Color Per Line" name="product_secondary_colors" id="product_secondary_colors" class="stretch" cols="34" rows="5"></textarea>
 						<label for="product_sizes" style="display:block">Sizes: </label><textarea placeholder="One Size Per Line" name="product_sizes" id="product_sizes" class="stretch" cols="34" rows="5">Small
 Medium
@@ -67,6 +68,7 @@ XXXL</textarea>
 					<label for="category_singular_name" style="display:block">Singular Name: </label><input type="text" placeholder="Ex: Shirt; Jewelry; Hat" name="category_singular_name" id="category_singular_name">
 					<label for="category_description" style="display:block">Description (Optional): </label><textarea name="category_description" id="category_description" class="stretch" cols="34" rows="10" style="margin-bottom: 10px;"></textarea>
 					<label for="category_image" style="display:block">Preview Image: </label><input type="text" name="category_image" id="category_image">
+					<label for="category_purchasable" style="display:block">Products are Purchasable? </label><input type="checkbox" name="category_purchasable" id="category_purchasable" value="true" checked="checked">
 					<input type="submit" value="Add Category" style="display: block; margin-top: 20px;">
 				</form>
 			</div>

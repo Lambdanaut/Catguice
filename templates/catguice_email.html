@@ -9,11 +9,25 @@ Paypal: {{ client['paypal_email'] }}
 Product
 =======
 Product: <a href="{{ url_for('product', product_slug=product['slug']) }}">{{ product['name'] }}</a>
+{% if 'price' in product %}
+	Price + Shipping = Total: {{ product['price'] }} + {{ client['shipping_price'] }} = {{ util.float(product['price']) + util.float(client['shipping_price']) }}
+{% endif %}
 {% if 'primary_color' in client %}
 	Color: {{ client['primary_color'] }}
+{% endif %}
+{% if 'secondary_color' in client %}
+	Secondary Color: {{ client['secondary_color'] }}
 {% endif %}
 {% if 'size' in client %}
 	Size: {{ client['size'] }}
 {% endif %}
+{% if 'additional_comments' in client %}
+	{% if client['additional_comments'] %}
+		Additional Comments: {{ client['additional_comments'] }}
+	{% endif %}
+{% endif %}
 
 - Catherine
+
+==================
+This is an automated email. Please do NOT reply! 
