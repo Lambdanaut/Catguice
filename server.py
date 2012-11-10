@@ -78,10 +78,11 @@ def product(product_slug):
     category = categories_model.get_one({"slug" : product['category'] })
     return render_template("product.html", product=product, category=category)
   elif request.method == 'POST':
-    # Delete the product
-    products_model.delete({"slug" : product_slug})
-    flash("Product <strong>" + product_slug + "</strong> Deleted Successfully")
-    return redirect(url_for('admincp'))
+    if g.admin:
+      # Delete the product
+      products_model.delete({"slug" : product_slug})
+      flash("Product <strong>" + product_slug + "</strong> Deleted Successfully")
+      return redirect(url_for('admincp'))
 
 @app.route("/product/<product_slug>/purchase", methods=['POST'])
 def purchase_product(product_slug):
@@ -105,6 +106,17 @@ def purchase_product_success(product_slug):
   if not product: abort(404)
   category = categories_model.get_one({"slug" : product['category'] })
   return render_template("purchase_success.html", product=product, category=category)
+
+@app.route("/product/<product_slug>/edit", methods=['GET', 'POST'])
+def edit_product(product_slug):
+  if not secrets_found: abort(404)
+  if g.admin:
+    product = products_model.get_one({"slug" : product_slug.lower() })
+    if not product: abort(404)
+    if request.method == 'GET':
+      return redirect(url_for('purchase_product_success', product_slug=product_slug))
+    elif request.method == 'POST':
+      pass
 
 @app.route("/categories/<category_slug>", methods=['GET', 'POST'])
 def category(category_slug):

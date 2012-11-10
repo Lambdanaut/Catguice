@@ -28,10 +28,10 @@
 
 </head>
 <body>
+<!--
 <header>
 	<div class="container_12">
 		<div class="grid_6">
-			<a href="{{ url_for("index") }}"><img src="/static/img/catguice_logo.png" id="logo_image"><span id="logo_text">CATGUICE</span></a>
 		</div>
 		<div class="grid_6">
 			<div style="float: right; margin-right:10px;">
@@ -50,7 +50,12 @@
 		</ul>
 	</div>
 </nav>
+-->
 <div role="main" id="content" class="container_12">
+	<header>
+		<a href="{{ url_for("index") }}"><img src="/static/img/catguice_logo.png" id="logo_image"><span id="logo_text"><span style="color:#4CCC4C;">CAT</span>GUICE</span>
+		<div style="margin-left: 78px;">Custom Apparel &amp; More! </div></a>
+	</header>
 	{% with messages = get_flashed_messages() %}
 		{% if messages %}
 			<ul class=flashes>

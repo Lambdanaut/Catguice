@@ -1,13 +1,14 @@
 /* The main Catguice specific CSS */
 body {
-	font-family: 'Short Stack', cursive;
+	font-family: arial;
 	background-color: #4CCC4C;
 	color: #4B0090;
+	background-image: url("/static/img/background_stripe.png");
+	background-repeat: repeat;
 }
 
 h1 {
 	font-size: 1.5em;
-	border-bottom: dashed 3px #B378DC;
 	color: #4CCC4C;
 }
 h2 {
@@ -25,11 +26,11 @@ textarea {margin-bottom: 10px;}
 input {margin-bottom: 10px; border: solid 1px black}
 
 header {
-	position: relative;
-	top: 0; right: 0; left: 0;
-	padding: 5px 50px 5px 50px;
-	background-color: #FFFFFF;
-	border-bottom: solid 1px black;
+	font-family: 'Short Stack', cursive;
+	border-bottom: dashed 5px #B378DC;
+	border-top: dashed 5px #B378DC;
+	padding: 10px 0;
+	margin-bottom: 15px;
 }
 
 header a:hover {
