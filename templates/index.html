@@ -1,22 +1,82 @@
 {% extends "layout.html" %}
 {% block head %}
+	<script src="static/js/rotating_widget.js"></script>
+	<style>
+		.rotating_widget {
+			float: right;
+			margin: 0 10px 10px 10px;
+		}
+		nav {
+			float: left;
+			margin-left: 10px;
+		}
+		nav ul {
+			list-style-type: none;
+			font-size: 1.8em;
+			width: 160px;
+		}
+		nav li {
+			margin: 1px;
+			border-bottom: dashed 2px #B378DC;
+		}
+		nav li:first-child {
+			border-top: dashed 2px #B378DC;
+		}
+		nav li a:hover {
+			color: #4CCC4C;
+			text-decoration: none;
+		}
+
+	</style>
 {% endblock %}
 
 {% block content %}
-	{% if categories.count() %}
-		{% set row_count=1 %}
-		{% for category in categories %}
-			<div class="grid_4">
-				<div class="product_preview">
-					<a href="{{ url_for("category", category_slug = category['slug']) }}">
-						<div class="product_name">{{ category['name'] }}</div>
-						<img src="{{ category['image'] }}">
-					</a>
-				</div>
-			</div>
-			{% if row_count % 3 == 0 %}<div class="clear"></div>{% endif %}
-			{% set row_count = row_count + 1 %}
-		{% endfor %}
-	{% endif %}
+
+	<nav>
+		<ul>
+			<li><a href="{{ url_for("category", category_slug = "shirts") }}">Shirts</a></li>
+			<li><a href="{{ url_for("category", category_slug = "jewelry") }}">Jewelry</a></li>
+			<li><a href="{{ url_for("category", category_slug = "badges") }}">Badges</a></li>
+            <li><a href="{{ url_for("category", category_slug = "hair-accessories") }}">Hair</a></li>
+            <li><a href="{{ url_for("category", category_slug = "charms") }}">Charms</a></li>
+            <li><a href="{{ url_for("category", category_slug = "miscellaneous") }}">Misc</a></li>
+            <li><a href="{{ url_for("custom_order") }}">Custom</a></li>
+		</ul>
+	</nav>
+	<div class="rotating_widget">
+		<div class="next_button">
+			&Delta;
+		</div>
+		<ul>
+			<li><img src="/static/img/rotate_widget_1.png"></li>
+			<li><img src="/static/img/rotate_widget_2.png"></li>
+			<li><img src="/static/img/rotate_widget_3.png"></li>
+		</ul>
+	</div>
+
+	<div class="grid_4">
+		<div class="product_preview">
+			<a href="{{ url_for("category", category_slug = "custom-gallery") }}">
+				<div class="product_name">Custom Gallery</div>
+				<img src="/static/img/custom_gallery_thumbnail.png">
+			</a>
+		</div>
+	</div>
+	<div class="grid_4">
+		<div class="product_preview">
+			<a href="{{ url_for("category", category_slug = "testimonials") }}">
+				<div class="product_name">Testimonials</div>
+				<img src="/static/img/testimonials_thumbnail.png">
+			</a>
+		</div>
+	</div>
+	<div class="grid_4">
+		<div class="product_preview">
+			<a href="{{ url_for("category", category_slug = "featured-products") }}">
+				<div class="product_name">Featured Products</div>
+				<img src="/static/img/featured_products_thumbnail.png">
+			</a>
+		</div>
+	</div>
 	<div class="clear"></div>
 {% endblock %}

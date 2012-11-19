@@ -37,6 +37,7 @@ header a:hover {
 	text-decoration: none;
 }
 
+/* Old Nav Stuff
 nav {
 	background-color: #B378DC;
 	border-bottom: solid 1px black;
@@ -52,6 +53,34 @@ nav a {
 }
 nav a:hover   { color: #FFFFFF; text-decoration: underline; }
 nav a:visited { color: #FFFFFF; } 
+*/
+
+/* Rotating Images Widget */
+.rotating_widget {
+	border: solid 1px #A935FB;
+	width: 762px;
+	height: 308px;
+	overflow: hidden;
+}
+.rotating_widget .next_button {
+	cursor: pointer;
+	text-align: center;
+	width: 100%;
+	height: 20px;
+	color: white;
+	background-color: #B378DC;
+}
+.rotating_widget .next_button:hover {
+	background-color: #D599FE;
+}
+.rotating_widget ul {
+	margin: 0;
+	padding: 0;
+}
+.rotating_widget ul li {
+	list-style-type: none;
+	display: none;
+}
 
 /* Double Underlined */
 .double_underline {
