@@ -108,15 +108,40 @@ def purchase_product_success(product_slug):
   return render_template("purchase_success.html", product=product, category=category)
 
 @app.route("/product/<product_slug>/edit", methods=['GET', 'POST'])
-def edit_product(product_slug):
+def product_edit(product_slug):
   if not secrets_found: abort(404)
   if g.admin:
     product = products_model.get_one({"slug" : product_slug.lower() })
     if not product: abort(404)
     if request.method == 'GET':
-      return redirect(url_for('purchase_product_success', product_slug=product_slug))
+      categories = categories_model.get()
+      return render_template("product_edit.html", product=product, categories=categories)
     elif request.method == 'POST':
-      pass
+      # Make sure all the required fields were found. 
+      product_fields = ['product_name', 'product_description', 'product_price', 'product_images', 'product_primary_colors', 'product_secondary_color_name', 'product_secondary_colors', 'product_sizes', 'product_category']
+      if not all(map(lambda p: p in request.form, product_fields) ):
+        return "There was an error processing your request. Not all of the required fields were found to be submitted. "
+      if not request.form['product_name']: return "The product name is required"
+      if not request.form['product_category']: return "The category is required"
+      if request.form['product_description']: description = request.form['product_description']
+      else:                                   description = None
+      if 'product_secondary_color_optional' in request.form: secondary_color_optional = True
+      else:                                                  secondary_color_optional = False
+      product_data = { "$set" : {
+        'name'                     : request.form['product_name']
+      , 'description'              : description
+      , 'price'                    : request.form['product_price']
+      , 'images'                   : util.split_product_list(request.form['product_images'])
+      , 'primary_colors'           : util.split_product_list(request.form['product_primary_colors'])
+      , 'secondary_color_name'     : request.form['product_secondary_color_name']
+      , 'secondary_colors'         : util.split_product_list(request.form['product_secondary_colors'])
+      , 'secondary_color_optional' : secondary_color_optional
+      , 'sizes'                    : util.split_product_list(request.form['product_sizes'])
+      , 'category'                 : request.form['product_category']
+      } } 
+      products_model.update({"slug": product_slug.lower() }, product_data)
+      flash("Product Added Successfully")
+      return redirect(url_for('admincp'))
 
 @app.route("/categories/<category_slug>", methods=['GET', 'POST'])
 def category(category_slug):

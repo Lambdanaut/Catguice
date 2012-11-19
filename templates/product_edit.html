@@ -1,0 +1,33 @@
+ {% extends "layout.html" %}
+{% block title %}Edit Product{% endblock %}
+{% block head %}
+<style>
+textarea {
+	width: 100%;
+}
+</style>
+{% endblock %}
+{% block content %}
+	<form method="POST">
+		<label for="product_name" style="display:block">Name: </label><input type="text" name="product_name" id="product_name" value="{{ product['name'] }}">
+		<label for="product_description" style="display:block">Description: </label><textarea name="product_description" id="product_description" cols="34" rows="10" style="margin-bottom: 10px;">{{ product['description'] }}</textarea>
+		<label for="product_price" style="display:block">Price: </label>$<input type="text" name="product_price" id="product_price" placeholder="Ex: 25.00; 17.50; 1.75" value="{{ product['price'] }}">
+		<label for="product_images" style="display:block">Image Links: </label><textarea placeholder="One Image Link Per Line" name="product_images" id="product_images" cols="34" rows="5">{% for image in product['images'] %}{{ image }}
+{% endfor %}</textarea>
+		<label for="product_primary_colors" style="display:block">Primary Colors: </label><textarea placeholder="One Color Per Line" name="product_primary_colors" id="product_primary_colors" cols="34" rows="5">{% for color in product['primary_colors'] %}{{ color }}
+{% endfor %}</textarea>
+		<label for="product_secondary_color_name" style="display:block">Secondary Color Name: </label><input type="text" name="product_secondary_color_name" id="product_secondary_color_name" placeholder="Ex: Splatter; Thorn Vine; Cords;" value="{{ product['secondary_color_name'] }}">
+		<label for="product_secondary_colors" style="display:block">Secondary Colors: </label><textarea placeholder="One Color Per Line" name="product_secondary_colors" id="product_secondary_colors" cols="34" rows="5">{% for color in product['secondary_colors'] %}{{ color }}
+{% endfor %}</textarea>
+		<label for="product_secondary_color_optional" style="display:block">Secondary Color Optional?: </label><input type="checkbox" name="product_secondary_color_optional" id="product_secondary_color_optional" value="true"{% if product['secondary_color_optional'] %}checked="checked"{% endif %}>
+		<label for="product_sizes" style="display:block">Sizes: </label><textarea placeholder="One Size Per Line" name="product_sizes" id="product_sizes" cols="34" rows="5">{% for size in product['sizes'] %}{{ size }}
+{% endfor %}</textarea>
+		<label for="product_category" style="display:block">Category: </label>
+		<select name="product_category" id="product_category">
+			{% for category in categories %}
+			<option value="{{ category["slug"] }}">{{ category["name"] }}</option>
+			{% endfor %}
+		</select>
+		<input type="submit" value="Add Product" style="display: block; margin-top: 20px;">
+	</form>
+{% endblock %}
