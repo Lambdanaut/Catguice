@@ -83,7 +83,6 @@ def product(product_slug):
       products_model.delete({"slug" : product_slug})
       flash("Product <strong>" + product_slug + "</strong> Deleted Successfully")
       return redirect(url_for('admincp'))
-    else: abort(404)
 
 @app.route("/product/<product_slug>/purchase", methods=['POST'])
 def purchase_product(product_slug):
@@ -141,9 +140,8 @@ def product_edit(product_slug):
       , 'category'                 : request.form['product_category']
       } } 
       products_model.update({"slug": product_slug.lower() }, product_data)
-      flash("Product Added Successfully")
-      return redirect(url_for('admincp'))
-  else: abort(404)
+      flash("Product Edited Successfully")
+      return redirect(url_for('product', product_slug = product['slug']))
 
 @app.route("/categories/<category_slug>", methods=['GET', 'POST'])
 def category(category_slug):
@@ -158,7 +156,6 @@ def category(category_slug):
       categories_model.delete({"slug" : category_slug.lower()})
       flash("Category and all of its Associated Products Deleted Successfully")
       return redirect(url_for('admincp'))
-    else: abort(404)
 
 @app.route("/admincp", methods=['GET','POST'])
 def admincp():
@@ -199,11 +196,11 @@ def add_product():
       , 'secondary_colors'         : util.split_product_list(request.form['product_secondary_colors'])
       , 'secondary_color_optional' : secondary_color_optional
       , 'sizes'                    : util.split_product_list(request.form['product_sizes'])
+      , 'category'                 : request.form['product_category']
       }
       products_model.insert(product_data)
       flash("Product Added Successfully")
       return redirect(url_for('admincp'))
-  else: abort(404) 
 
 @app.route("/admincp/add_category", methods=['POST'])
 def add_category():
@@ -228,7 +225,6 @@ def add_category():
       categories_model.insert(cat_data)
       flash("Category Added Successfully")
       return redirect(url_for('admincp'))
-  else: abort(404)
 
 @app.errorhandler(404)
 def not_found(e):

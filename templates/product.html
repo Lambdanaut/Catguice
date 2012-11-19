@@ -29,7 +29,7 @@
 				var total_price = parseFloat(base_price) + parseFloat(shipping_price);
 				$("#ship_base_price").text(base_price);
 				$("#ship_shipping_price").text(shipping_price);
-				$("#ship_total_price").text( total_price.toPrecision(3) );
+				$("#ship_total_price").text( total_price.toPrecision(4) );
 			});
 			$("#shipping_price").trigger("change");
 		});

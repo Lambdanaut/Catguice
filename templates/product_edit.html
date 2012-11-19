@@ -28,6 +28,6 @@ textarea {
 			<option value="{{ category["slug"] }}"{% if product['category'] == category['slug'] %}selected="selected"{% endif %}>{{ category["name"] }}</option>
 			{% endfor %}
 		</select>
-		<input type="submit" value="Add Product" style="display: block; margin-top: 20px;">
+		<input type="submit" value="Update Product" style="display: block; margin-top: 20px;">
 	</form>
 {% endblock %}
