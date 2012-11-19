@@ -25,7 +25,7 @@ textarea {
 		<label for="product_category" style="display:block">Category: </label>
 		<select name="product_category" id="product_category">
 			{% for category in categories %}
-			<option value="{{ category["slug"] }}">{{ category["name"] }}</option>
+			<option value="{{ category["slug"] }}"{% if product['category'] == category['slug'] %}selected="selected"{% endif %}>{{ category["name"] }}</option>
 			{% endfor %}
 		</select>
 		<input type="submit" value="Add Product" style="display: block; margin-top: 20px;">

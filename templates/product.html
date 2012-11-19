@@ -60,6 +60,7 @@
 		{% endif %}
 	</div>
 	<div class="grid_6">
+		{% if g.admin %}<a href="{{ url_for("product_edit", product_slug = product['slug']) }}" style="float:right">Edit</a>{% endif %}
 		<h1>{{ product['name'] }}</h1>
 		<p>{{ product['description'] | safe }}</p>
 		{% if product['price'] %}
