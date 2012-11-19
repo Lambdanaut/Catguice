@@ -83,6 +83,7 @@ def product(product_slug):
       products_model.delete({"slug" : product_slug})
       flash("Product <strong>" + product_slug + "</strong> Deleted Successfully")
       return redirect(url_for('admincp'))
+    else: abort(401)
 
 @app.route("/product/<product_slug>/purchase", methods=['POST'])
 def purchase_product(product_slug):
@@ -96,7 +97,7 @@ def purchase_product(product_slug):
   # Mail Client
   purchase_catguice_subject = "Instructions for Completing your Purchase"
   purchase_catguice_email = render_template("customer_email.html", client=request.form, category=category)
-  mail.send_mail(config.MY_EMAIL, config.MY_EMAIL, purchase_catguice_subject, purchase_catguice_email)
+  mail.send_mail(request.form['contact_email'], config.MY_EMAIL, purchase_catguice_subject, purchase_catguice_email)
   return redirect(url_for('purchase_product_success', product_slug=product_slug))
 
 @app.route("/product/<product_slug>/purchase_success", methods=['GET'])
@@ -142,6 +143,7 @@ def product_edit(product_slug):
       products_model.update({"slug": product_slug.lower() }, product_data)
       flash("Product Edited Successfully")
       return redirect(url_for('product', product_slug = product['slug']))
+  else: abort(401)
 
 @app.route("/categories/<category_slug>", methods=['GET', 'POST'])
 def category(category_slug):
@@ -156,6 +158,7 @@ def category(category_slug):
       categories_model.delete({"slug" : category_slug.lower()})
       flash("Category and all of its Associated Products Deleted Successfully")
       return redirect(url_for('admincp'))
+    else: abort(401)
 
 @app.route("/admincp", methods=['GET','POST'])
 def admincp():
@@ -201,6 +204,7 @@ def add_product():
       products_model.insert(product_data)
       flash("Product Added Successfully")
       return redirect(url_for('admincp'))
+  else: abort(401)
 
 @app.route("/admincp/add_category", methods=['POST'])
 def add_category():
@@ -225,6 +229,7 @@ def add_category():
       categories_model.insert(cat_data)
       flash("Category Added Successfully")
       return redirect(url_for('admincp'))
+  else: abort(401)
 
 @app.errorhandler(404)
 def not_found(e):

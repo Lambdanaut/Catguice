@@ -4,7 +4,6 @@ import os
 
 import config
 
-
 try:
 	sendgrid_username = os.environ['SENDGRID_USERNAME'];
 	sendgrid_password = os.environ['SENDGRID_PASSWORD'];

@@ -6,7 +6,7 @@ $(document).ready(function () {
 			$(".rotating_widget .next_button").click(next);
 		});
 	}
-	setInterval(next, 4000);
+	setInterval(next, 5000);
 
 	$(".rotating_widget ul li:first-child").show();
 	$(".rotating_widget .next_button").click(next);
