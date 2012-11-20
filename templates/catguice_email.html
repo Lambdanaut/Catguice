@@ -1,33 +1,33 @@
-YO, You got an order. 
+YO, You got an order. <br><br>
 
-Client Information
-==================
-Name: {{ client['client_name'] }}
-Email: {{ client['contact_email'] }} 
-Paypal: {{ client['paypal_email'] }} 
+Client Information<br>
+==================<br>
+Name: {{ client['client_name'] }}<br>
+Email: {{ client['contact_email'] }}<br>
+Paypal: {{ client['paypal_email'] }}<br><br> 
 
-Product
-=======
-Product: <a href="{{ url_for('product', product_slug=product['slug']) }}">{{ product['name'] }}</a>
+Product<br>
+=======<br>
+Product: <a href="{{ url_for('product', product_slug=product['slug']) }}">{{ product['name'] }}</a><br>
 {% if 'price' in product %}
-	Price + Shipping = Total: {{ product['price'] }} + {{ client['shipping_price'] }} = {{ util.float(product['price']) + util.float(client['shipping_price']) }}
+	Price + Shipping = Total: {{ product['price'] }} + {{ client['shipping_price'] }} = {{ util.float(product['price']) + util.float(client['shipping_price']) }}<br>
 {% endif %}
 {% if 'primary_color' in client %}
-	Color: {{ client['primary_color'] }}
+	Color: {{ client['primary_color'] }}<br>
 {% endif %}
 {% if 'secondary_color' in client %}
-	Secondary Color: {% if client['secondary_color_enabled'] %}{{ client['secondary_color'] }}{% else %}(Secondary Color Disabled){% endif %}
+	Secondary Color: {% if client['secondary_color_enabled'] %}{{ client['secondary_color'] }}{% else %}(Secondary Color Disabled){% endif %}<br>
 {% endif %}
 {% if 'size' in client %}
-	Size: {{ client['size'] }}
+	Size: {{ client['size'] }}<br>
 {% endif %}
 {% if 'additional_comments' in client %}
 	{% if client['additional_comments'] %}
-		Additional Comments: {{ client['additional_comments'] }}
+		Additional Comments: {{ client['additional_comments'] }}<br>
 	{% endif %}
 {% endif %}
+<br><br>
+- Catherine<br><br>
 
-- Catherine
-
-==================
-This is an automated email. Please do NOT reply! 
+==================<br>
+This is an automated email. Please do NOT reply! <br>
