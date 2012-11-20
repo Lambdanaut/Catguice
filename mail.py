@@ -29,6 +29,6 @@ def send_mail(send_to, send_from, subject, body, send_to_name = None):
 			send_to = config.TESTING_EMAIL
 		if not send_to_name:
 			send_to_name = send_to
-		message = sendgrid.Message(send_from, subject, body)
+		message = sendgrid.Message(send_from, subject, body, body)
 		message.add_to(send_to, send_to_name)
 		sendgrid_connection.web.send(message)
