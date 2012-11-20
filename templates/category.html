@@ -3,6 +3,7 @@
 {% block head %}
 {% endblock %}
 {% block content %}
+	{% if g.admin %}<a href="{{ url_for("category_edit", category_slug = category['slug']) }}" style="float: right;">Edit</a>{% endif %}
 	<h1>{{ category['name'] }}</h1>
 	{% if category['description'] %}
 		<p>{{ category['description'] }}</p>

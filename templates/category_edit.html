@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block title %}Edit Category{% endblock %}
+{% block head %}
+<style>
+textarea {
+	width: 100%;
+}
+</style>
+{% endblock %}
+{% block content %}
+	<form method="POST">
+		<label for="category_name" style="display:block">Name: </label><input type="text" placeholder="Ex: Shirts; Jewelry; Hats" name="category_name" id="category_name" value="{{ category['name'] }}">
+		<label for="category_singular_name" style="display:block">Singular Name: </label><input type="text" placeholder="Ex: Shirt; Jewelry; Hat" name="category_singular_name" id="category_singular_name" value="{{ category['singular_name'] }}">
+		<label for="category_description" style="display:block">Description (Optional): </label><textarea name="category_description" id="category_description" cols="34" rows="10" style="margin-bottom: 10px;">{{ category['description'] }}</textarea>
+		<label for="category_image" style="display:block">Preview Image: </label><input type="text" name="category_image" id="category_image" value="{{ category['image'] }}">
+		<label for="category_purchasable" style="display:block">Products are Purchasable? </label><input type="checkbox" name="category_purchasable" id="category_purchasable" value="true"{% if category['purchasable'] %}checked="checked"{% endif %}>
+		<input type="submit" value="Update Category" style="display: block; margin-top: 20px;">
+	</form>
+{% endblock %}

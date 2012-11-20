@@ -50,10 +50,7 @@ def inject_template():
 def index():
   featured_products = products_model.get(series = {"featured" : True})
   categories = categories_model.get()
-  if categories.count() == 1:
-    return redirect(url_for('category', category_slug = categories[0]['slug']))
-  else:
-    return render_template("index.html", categories=categories)
+  return render_template("index.html", categories=categories)
 
 @app.route("/about")
 def about():
@@ -145,7 +142,7 @@ def product_edit(product_slug):
       return redirect(url_for('product', product_slug = product['slug']))
   else: abort(401)
 
-@app.route("/categories/<category_slug>", methods=['GET', 'POST'])
+@app.route("/category/<category_slug>", methods=['GET', 'POST'])
 def category(category_slug):
   if request.method == 'GET':
     category = categories_model.get_one({"slug" : category_slug.lower()})
@@ -159,6 +156,35 @@ def category(category_slug):
       flash("Category and all of its Associated Products Deleted Successfully")
       return redirect(url_for('admincp'))
     else: abort(401)
+
+@app.route("/category/<category_slug>/edit", methods=['GET', 'POST'])
+def category_edit(category_slug):
+  if not secrets_found: abort(404)
+  if g.admin:
+    category = categories_model.get_one({"slug" : category_slug.lower()})
+    if not category: abort(404)
+    if request.method == 'GET':
+      return render_template("category_edit.html", category=category)
+    elif request.method == 'POST':
+        category_fields = ['category_name', 'category_singular_name', 'category_description', 'category_image']
+        if not all(map(lambda c: c in request.form, category_fields) ):
+          return "There was an error processing your request. Not all of the required fields were found to be submitted. "
+        if not request.form['category_name']: return "The category name is required"
+        if request.form['category_description']: description = request.form['category_description']
+        else:                                    description = None
+        if 'category_purchasable' in request.form: purchasable = True
+        else:                                      purchasable = False
+        cat_data = { "$set" : {
+          'name'          : request.form['category_name']
+        , 'singular_name' : request.form['category_singular_name']
+        , 'description'   : description
+        , 'image'         : request.form['category_image']
+        , 'purchasable'   : purchasable
+        } }
+        categories_model.update({"slug" : category_slug.lower() }, cat_data)
+        flash("Category Updated Successfully")
+        return redirect(url_for('category', category_slug = category_slug))
+  else: abort(401)
 
 @app.route("/admincp", methods=['GET','POST'])
 def admincp():
